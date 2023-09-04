@@ -1,10 +1,12 @@
 # Garbage_classifier
 
-## road map
-- create dataset tools [asap]
-- create dataset [mid october]
-- write neural network [by the end of october]
-- test accuracy [end of october]
-- write paper [mid november]
-- final changes to the paper + submit [end of november]
-- great success
+## Road map
+- [ ] Create dataset tools [asap]
+    - [ ] Create data set specification
+    - [ ] Create bash scripts
+- [ ] Create dataset [mid october]
+- [ ] Write neural network [by the end of october]
+- [ ] Test accuracy [end of october]
+- [ ] Write paper [mid november]
+- [ ] Final changes to the paper + submit [end of november]
+- [ ] Great success

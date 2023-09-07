@@ -1,6 +1,10 @@
 # Garbage_classifier
 
 ## Road map
+### Already done:
+- Created backgrounds for dataset photos from paper and graphite
+
+### To do:
 - [ ] Create dataset tools [asap]
     - [ ] Create data set specification
     - [ ] Create bash scripts

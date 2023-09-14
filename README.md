@@ -3,11 +3,15 @@
 ## Road map
 ### Already done:
 - Created backgrounds for dataset photos from paper and graphite
+- Added first dataset images to the cloud folder
+- wrote a script in katna for rescaling dataset images to be squares
+- wrote a bash script to rescale the images to 512*512 using ffmpeg
+- created a doc with dataset specs
 
 ### To do:
 - [ ] Create dataset tools [asap]
-    - [ ] Create data set specification
-    - [ ] Create bash scripts
+    - [x] Create data set specification
+    - [x] Create bash scripts
 - [ ] Create dataset [mid october]
 - [ ] Write neural network [by the end of october]
 - [ ] Test accuracy [end of october]

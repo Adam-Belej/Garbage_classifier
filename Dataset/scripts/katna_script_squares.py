@@ -1,11 +1,14 @@
 from Katna.image import Image
 from Katna.writer import ImageCropDiskWriter
 import os
+import sys.argv
 
 DIRECTORY = '/home/adam/Projects/Garbage_Classifier_dataset/Plast'
 DIRECTORY_OUT = '/home/adam/Projects/Garbage_Classifier_dataset_squares'
 CROP_ASPECT_RATIO = '1:1'
 IMAGE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.bmp', '.gif']
+NUM_OF_CROPS = 4
+DOWN_SAMPLE_FACTOR = 32
 
 
 def get_all_images_from_dir(directory):
@@ -24,9 +27,11 @@ def crop_image(image_path):
     crop_list = img_module.crop_image_with_aspect(
         file_path=image_file_path,
         crop_aspect_ratio=CROP_ASPECT_RATIO,
-        num_of_crops=1,
+        num_of_crops=NUM_OF_CROPS,
         writer=diskwriter,
-        down_sample_factor=32)
+        down_sample_factor=DOWN_SAMPLE_FACTOR
+    )
+    return crop_list
 
 
 if __name__ == '__main__':

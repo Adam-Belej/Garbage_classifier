@@ -1,13 +1,13 @@
-#Dataset specs
+# Dataset specs
 
-##Dataset Statistics:
+## Dataset Statistics:
 - **Total Number of Images**: tbd
 - **Number of Classes**: 5
 - **Classes** : Plastic, Paper, White Glass, Coloured Glass, Residual Waste
 
-##Data Format:
+## Data Format:
 - **Image Format**: PNG
 - **Image Resolution**: 512x512px
 
-##Data Preprocessing:
+## Data Preprocessing:
 - **Data Augmentation**: tbd 

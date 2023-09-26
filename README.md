@@ -7,6 +7,7 @@
 - wrote a script in katna for rescaling dataset images to be squares
 - wrote a bash script to rescale the images to 512*512 using ffmpeg
 - created a doc with dataset specs
+- wrote a script to resize and augment dataset pictures using ffmpeg-python library
 
 ### To do:
 - [ ] Create dataset tools [asap]

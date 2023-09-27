@@ -1,9 +1,13 @@
 import ffmpeg
+import typing
 
 
-def resize_image(input_file, output_file):
+def resize_image(input_file: str,
+                 output_file: str,
+                 width: int = 512,
+                 height: int = 512):
     input_stream = ffmpeg.input(input_file)
-    output_stream = ffmpeg.output(input_stream, output_file, vf='scale=512:512')
+    output_stream = ffmpeg.output(input_stream, output_file, vf=f"scale={width}:{height}")
 
     try:
         ffmpeg.run(output_stream)
@@ -11,7 +15,7 @@ def resize_image(input_file, output_file):
         print(f"Error: {e.stderr}")
 
 
-def flip_image(input_file, output_file):
+def horizontal_flip_image(input_file: str, output_file: str):
     input_stream = ffmpeg.input(input_file)
     output_stream = ffmpeg.output(input_stream, output_file, vf='hflip')
 
@@ -21,7 +25,9 @@ def flip_image(input_file, output_file):
         print(f"Error: {e.stderr}")
 
 
-def rotate_image(input_file, output_file, angle):
+def rotate_image(input_file: str,
+                 output_file: str,
+                 angle: int = 90):
     input_stream = ffmpeg.input(input_file)
     output_stream = ffmpeg.output(input_stream, output_file, vf=f'rotate={angle}')
 

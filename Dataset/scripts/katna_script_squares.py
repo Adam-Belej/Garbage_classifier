@@ -1,7 +1,7 @@
 from Katna.image import Image
 from Katna.writer import ImageCropDiskWriter
 import os
-import sys.argv
+from sys import argv
 import typing
 
 
@@ -16,7 +16,7 @@ def get_all_images_from_dir(directory: str,
     return images
 
 
-def crop_image(directory: str,
+def crop_image_with_aspect_ratio(directory: str,
                directory_out: str,
                crop_aspect_ratio: str = "1:1",
                num_of_crops: int = 1,
@@ -41,7 +41,7 @@ def main():
 
     for filename in get_all_images_from_dir(directory):
         print("Cropping: ", filename)
-        crop_image(filename, directory_out)
+        crop_image_with_aspect_ratio(filename, directory_out)
 
 
 if __name__ == "__main__":

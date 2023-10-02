@@ -2,7 +2,7 @@ import ffmpeg
 import typing
 
 
-def resize_image(input_file: str,
+def downscale_image(input_file: str,
                  output_file: str,
                  width: int = 512,
                  height: int = 512):
@@ -15,7 +15,8 @@ def resize_image(input_file: str,
         print(f"Error: {e.stderr}")
 
 
-def horizontal_flip_image(input_file: str, output_file: str):
+def horizontal_flip_image(input_file: str,
+                          output_file: str):
     input_stream = ffmpeg.input(input_file)
     output_stream = ffmpeg.output(input_stream, output_file, vf='hflip')
 

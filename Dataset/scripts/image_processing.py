@@ -20,6 +20,6 @@ for cropped_image in cropped_images:
 if str(input("Augment images? Y/N: ")).lower() == "y":
     for downscaled_image in downscaled_images:
         horizontal_flip_image(downscaled_image, f"{downscaled_image}_flipped")
-        for i in range(1, 5):
+        for i in range(1, 4):
             rotate_image(downscaled_image, f"{downscaled_image}_rotated_{90*i}")
             rotate_image(f"{downscaled_image}_flipped", f"{downscaled_image}_flipped_rotated_{90*i}")

@@ -10,4 +10,5 @@
 - **Image Resolution**: 512x512px
 
 ## Data Preprocessing:
-- **Data Augmentation**: tbd 
+- **Data Augmentation**: tbd
+

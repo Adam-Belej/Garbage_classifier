@@ -3,14 +3,17 @@ import typing
 
 
 def downscale_image(input_file: str,
-                 output_file: str,
-                 width: int = 512,
-                 height: int = 512):
-    input_stream = ffmpeg.input(input_file)
-    output_stream = ffmpeg.output(input_stream, output_file, vf=f"scale={width}:{height}")
-
+                    output_file: str,
+                    width: int = 512,
+                    height: int = 512):
     try:
-        ffmpeg.run(output_stream)
+        (
+            ffmpeg
+            .input(input_file)
+            .filter("scale", width, height)
+            .output(output_file)
+            .run()
+        )
     except ffmpeg.Error as e:
         print(f"Error: {e.stderr}")
 

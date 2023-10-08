@@ -1,6 +1,6 @@
 import os
-from katna_script_squares import get_all_images_from_dir, crop_image_with_aspect_ratio
-from ffmpeg_dataset_tools import downscale_image, rotate_image, horizontal_flip_image
+from katna_utils import get_all_images_from_dir, crop_image_with_aspect_ratio
+from ffmpeg_utils import downscale_image, rotate_image, horizontal_flip_image
 
 
 path_to_images = str(input("Folder with images: "))

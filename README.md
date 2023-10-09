@@ -1,5 +1,10 @@
 # Garbage_classifier
 
+### Dependencies
+#### Python packages:
+- ffmpeg-python <https://pypi.org/project/ffmpeg-python/>
+- katna <https://pypi.org/project/katna/>
+
 ## Road map
 ### Already done:
 - Created backgrounds for dataset photos from paper and graphite

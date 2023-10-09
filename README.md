@@ -1,9 +1,18 @@
 # Garbage_classifier
 
-### Dependencies
-#### Python packages:
+
+## Description
+**The main goals of this repository are to:**
+- Create a functional neural network
+- Create python scripts for editing and augmenting images to fit a specified size for the network
+- Keep track of all progress as the whole project will be used to write a publication for the SOČ competition
+
+
+## Dependencies
+### Python packages:
 - ffmpeg-python <https://pypi.org/project/ffmpeg-python/>
 - katna <https://pypi.org/project/katna/>
+
 
 ## Road map
 ### Already done:
@@ -13,6 +22,7 @@
 - wrote a bash script to rescale the images to 512*512 using ffmpeg
 - created a doc with dataset specs
 - wrote a script to resize and augment dataset pictures using ffmpeg-python library
+
 
 ### To do:
 - [ ] Create dataset tools [asap]

@@ -2,10 +2,11 @@
 import ffmpeg_utils as fu
 import katna_utils as ku
 import fs_utils as fs
+from args import get_args, print_args
 import os
 
 
-def main():
+def main(args):
 
     path_to_images = str(input("Folder with images: "))
     original_images = fs.get_all_images_from_dir(path_to_images)
@@ -24,8 +25,9 @@ def main():
         downscaled_image = os.path.join(downscaled_path, cropped_image)
         fu.downscale_image(cropped_image, downscaled_image)
 
-    pass
 
 
 if __name__ == '__main__':
-    main()
+    args = get_args()
+    print_args(args)
+    main(args)

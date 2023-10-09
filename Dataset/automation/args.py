@@ -33,3 +33,10 @@ def get_args():
 
     return arg_parser.parse_args()
 
+
+def print_args(args):
+    print("verbose:", args.verbose)
+    print("width:", args.width)
+    print("height:", args.height)
+    print("output_dir:", args.output_dir)
+    print("input_dir:", args.input_dir)

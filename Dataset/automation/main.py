@@ -1,5 +1,5 @@
 #!/bin/python
-import ffmpeg_utils as fu
+import pillow_utils as pu
 import katna_utils as ku
 import fs_utils as fs
 from args import get_args, print_args
@@ -7,24 +7,31 @@ import os
 
 
 def main(args):
-
+    augmentation = str(input("Augment images? Y/n")).lower()
     path_to_images = str(input("Folder with images: "))
     original_images = fs.get_all_images_from_dir(path_to_images)
 
-    cropped_path = f"{path_to_images}_cropped"
+    edited_path = f"{path_to_images}_edited"
 
     for image in original_images:
         image = os.path.join(path_to_images, image)
-        ku.crop_image_with_aspect_ratio(image, f"{path_to_images}_cropped")
+        ku.crop_image_with_aspect_ratio(image, edited_path)
 
-    downscaled_path = f"{cropped_path}_downscaled"
-    cropped_images = fs.get_all_images_from_dir(cropped_path)
+    edited_images = fs.get_all_images_from_dir(edited_path)
 
-    for cropped_image in cropped_images:
-        cropped_image = os.path.join(cropped_path, cropped_image)
-        downscaled_image = os.path.join(downscaled_path, cropped_image)
-        fu.downscale_image(cropped_image, downscaled_image)
+    for cropped_image in edited_images:
+        downscaled_image = os.path.join(edited_path, cropped_image)
+        pu.downscale_image(downscaled_image, downscaled_image)
 
+        if augmentation == "y":
+            pu.horizontal_flip_image(downscaled_image)
+
+    if augmentation == "y":
+        edited_images = fs.get_all_images_from_dir(edited_path)
+
+        for edited_image in edited_images:
+            edited_image = os.path.join(edited_path, edited_image)
+            pu.rotate_image(edited_image)
 
 
 if __name__ == '__main__':

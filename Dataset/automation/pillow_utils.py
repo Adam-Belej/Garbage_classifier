@@ -14,6 +14,8 @@ def downscale_image(input_file: str,
 
     except PIL.ImageFile.ERRORS as e:
         print(f"Error: {e}")
+        print(f"Error while downscaling {input_file}")
+        exit()
 
 
 def horizontal_flip_image(input_file: str):
@@ -28,19 +30,19 @@ def horizontal_flip_image(input_file: str):
 
     except PIL.ImageFile.ERRORS as e:
         print(f"Error: {e}")
+        print(f"Error while flipping {input_file}")
+        exit()
 
 
 def rotate_image(input_file: str,
                  angle: int = 90):
-
     for i in range(1, 4):
-
 
         new_file = input_file.split(".")
         new_file[0] = f"{new_file[0]}_rotated_{i}"
         output_file = ".".join(new_file)
 
-        new_angle = angle*i
+        new_angle = angle * i
 
         try:
             image = Image.open(input_file)
@@ -49,6 +51,8 @@ def rotate_image(input_file: str,
 
         except PIL.ImageFile.ERRORS as e:
             print(f"Error: {e}")
+            print(f"Error while rotating {input_file}")
+            exit()
 
 
 if __name__ == "__main__":

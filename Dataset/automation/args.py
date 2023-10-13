@@ -31,6 +31,11 @@ def get_args():
                             default=".",
                             help="Input directory") # TODO
 
+    arg_parser.add_argument("-e", "extension",
+                            type=str,
+                            default="png",
+                            help="Extension of the output file") # TODO
+
     return arg_parser.parse_args()
 
 

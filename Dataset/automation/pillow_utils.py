@@ -1,21 +1,28 @@
 import PIL.ImageFile
 from PIL import Image
+import os
 import typing
 
 
 def downscale_image(input_file: str,
-                    output_file: str,
                     width: int = 512,
                     height: int = 512):
+    new_file = input_file.split(".")
+    new_file[1] = "png"
+    output_file = ".".join(new_file)
     try:
         image = Image.open(input_file)
+        image = image.convert("RGB")
         image = image.resize((width, height))
         image.save(output_file)
+        os.remove(input_file)
 
     except PIL.ImageFile.ERRORS as e:
         print(f"Error: {e}")
         print(f"Error while downscaling {input_file}")
         exit()
+
+    return output_file
 
 
 def horizontal_flip_image(input_file: str):

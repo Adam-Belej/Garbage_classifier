@@ -21,7 +21,7 @@ def main(args):
 
     for cropped_image in edited_images:
         downscaled_image = os.path.join(edited_path, cropped_image)
-        pu.downscale_image(downscaled_image, downscaled_image)
+        downscaled_image = pu.downscale_image(downscaled_image)
 
         if augmentation == "y":
             pu.horizontal_flip_image(downscaled_image)

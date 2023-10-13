@@ -36,6 +36,11 @@ def get_args():
                             default="png",
                             help="Extension of the output file") # TODO
 
+    arg_parser.add_argument("-a", "--augmentation",
+                            type=bool,
+                            default=True,
+                            help="Augmentation of images y/n")  # TODO
+
     return arg_parser.parse_args()
 
 

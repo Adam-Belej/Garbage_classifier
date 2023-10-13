@@ -5,10 +5,11 @@ import typing
 
 
 def downscale_image(input_file: str,
+                    extension: str = "png",
                     width: int = 512,
                     height: int = 512):
     new_file = input_file.split(".")
-    new_file[1] = "png"
+    new_file[1] = extension
     output_file = ".".join(new_file)
     try:
         image = Image.open(input_file)

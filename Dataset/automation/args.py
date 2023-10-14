@@ -29,9 +29,10 @@ def get_args():
     arg_parser.add_argument("-i", "--input-dir",
                             type=str,
                             default=".",
-                            help="Input directory") # TODO
+                            help="Input directory",
+                            required=True) # TODO
 
-    arg_parser.add_argument("-e", "extension",
+    arg_parser.add_argument("-e", "--extension",
                             type=str,
                             default="png",
                             help="Extension of the output file") # TODO
@@ -39,7 +40,7 @@ def get_args():
     arg_parser.add_argument("-a", "--augmentation",
                             type=bool,
                             default=True,
-                            help="Augmentation of images y/n")  # TODO
+                            help="Augmentation of images True/False")  # TODO
 
     return arg_parser.parse_args()
 
@@ -50,3 +51,5 @@ def print_args(args):
     print("height:", args.height)
     print("output_dir:", args.output_dir)
     print("input_dir:", args.input_dir)
+    print("extension:", args.extension)
+    print("augmentation:", args.augmentation)

@@ -41,4 +41,9 @@ def main(input_dir: str,
 if __name__ == '__main__':
     args = get_args()
     print_args(args)
-    main(args)
+    main(input_dir=args.input_dir,
+         output_dir=args.output_dir,
+         width=args.width,
+         height=args.height,
+         extension=args.extension,
+         augmentation=args.augmentation)

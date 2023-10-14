@@ -10,7 +10,7 @@
 
 ## Dependencies
 ### Python packages:
-- ffmpeg-python <https://pypi.org/project/ffmpeg-python/>
+- pillow <https://pypi.org/project/Pillow/>
 - katna <https://pypi.org/project/katna/>
 
 

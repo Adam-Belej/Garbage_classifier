@@ -19,13 +19,15 @@
 - Created backgrounds for dataset photos from paper and graphite
 - Added first dataset images to the cloud folder
 - wrote a script in katna for rescaling dataset images to be squares
-- wrote a bash script to rescale the images to 512*512 using ffmpeg
 - created a doc with dataset specs
-- wrote a script to resize and augment dataset pictures using ffmpeg-python library
+- wrote a script to resize and augment dataset pictures using pillow library
+- finished making the dataset tools
+- made major progress creating the dataset
+
 
 
 ### To do:
-- [ ] Create dataset tools [asap]
+- [x] Create dataset tools [done]
     - [x] Create data set specification
     - [x] Create bash scripts
 - [ ] Create dataset [mid october]

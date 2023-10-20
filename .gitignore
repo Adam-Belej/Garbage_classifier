@@ -2,3 +2,4 @@ venv
 pyvenv.cfg
 Dataset/automation/__pycache__
 Dataset/automation/.idea/
+.idea/

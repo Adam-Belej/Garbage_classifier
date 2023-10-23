@@ -55,7 +55,7 @@ def main(input_dir: str,
     print_info(f"Input directory: {format(input_dir)}", verbose)
 
     path_to_images = input_dir
-    original_images = fs.get_all_images_from_dir(path_to_images, verbose=verbose)
+    original_images = fs.get_all_images_from_dir(path_to_images)
 
     print_info(f"Found {len(original_images)} images", verbose)
 

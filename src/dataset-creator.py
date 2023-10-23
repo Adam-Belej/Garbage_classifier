@@ -1,7 +1,8 @@
 #!/bin/python
-import utlis.pillow_utils as pu
-import utlis.katna_utils as ku
-import utlis.fs_utils as fs
+import utils.pillow_utils as pu
+import utils.katna_utils as ku
+import utils.fs_utils as fs
+from utils.console_utils import print_info, print_error, print_warning
 import os
 import argparse
 
@@ -50,15 +51,22 @@ def main(input_dir: str,
          augmentation: bool = True,
          verbose: bool = False):
 
+    print_info("Starting dataset creation", verbose)
+    print_info(f"Input directory: {format(input_dir)}", verbose)
+
     path_to_images = input_dir
     original_images = fs.get_all_images_from_dir(path_to_images, verbose=verbose)
 
+    print_info(f"Found {len(original_images)} images", verbose)
+
+    print_info("Starting cropping images")
     for image in original_images:
         image = os.path.join(path_to_images, image)
         ku.crop_image_with_aspect_ratio(image, output_dir)
 
     edited_images = fs.get_all_images_from_dir(output_dir)
 
+    print_info(f"Downscaling images to {width}x{height}", verbose)
     for cropped_image in edited_images:
         downscaled_image = os.path.join(output_dir, cropped_image)
         downscaled_image = pu.downscale_image(downscaled_image, extension=extension, width=width, height=height)
@@ -67,9 +75,11 @@ def main(input_dir: str,
             pu.horizontal_flip_image(downscaled_image)
 
     if not augmentation:
+        print_info("Skipping augmentation", verbose)
         return
     edited_images = fs.get_all_images_from_dir(output_dir)
 
+    print_info("Augmenting images", verbose)
     for edited_image in edited_images:
         edited_image = os.path.join(output_dir, edited_image)
         pu.rotate_image(edited_image)
@@ -84,4 +94,5 @@ if __name__ == '__main__':
          extension=args.extension,
          augmentation=args.augmentation,
          verbose=args.verbose)
+    print_info("Done", args.verbose)
 

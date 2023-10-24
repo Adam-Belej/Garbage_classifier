@@ -1,31 +1,27 @@
 from typing import List, Tuple, Any
-
-from PIL import Image
 import os
 import typing
+import tensorflow as tf
 
 
-def get_all_images_from_dir(folder: str,
-                            image_extensions=None) -> [list]:
-    if image_extensions is None:
-        image_extensions = [".jpg", ".jpeg", ".png", ".bmp", ".gif"]
-    images = []
+def load_dataset(data_dir: str,
+                 subset: str,
+                 validation_split: int = 0.2,
+                 img_width: int = 512,
+                 img_height: int = 512,
+                 batch_size: int = 32,
+                 seed: int = 123):
+    image_size = (img_height, img_width)
+    ds = tf.keras.utils.image_dataset_from_directory(
+        directory=data_dir,
+        subset=subset,
+        validation_split=validation_split,
+        image_size=image_size,
+        batch_size=batch_size,
+        seed=seed
+    )
 
-    for filename in os.listdir(folder):
-        if any(filename.endswith(ext) for ext in image_extensions):
-            images.append(filename)
-    return images
+    autotune = tf.data.AUTOTUNE
+    ds = ds.cache().prefetch(buffer_size=autotune)
 
-
-def get_pixel_values(input_image: str) -> [tuple]:
-    im = Image.open(input_image)
-    pixel_values = tuple(im.getdata())
-    return pixel_values
-
-
-def get_all_categories_from_dir(input_folder) -> [tuple]:
-    images = []
-    for path in os.listdir(input_folder):
-        images.append((os.path.join(input_folder, path), get_all_images_from_dir(os.path.join(input_folder, path))))
-    return images
-
+    return ds

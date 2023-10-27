@@ -4,8 +4,6 @@ import os
 
 
 def main(input_dir: str,
-         export_dir: str,
-         pretrained_dir: str,
          num_of_epochs: int = 10,
          num_of_classes: int = 3,
          img_width: int = 512,
@@ -14,7 +12,9 @@ def main(input_dir: str,
          validation_split: int = 0.2,
          learning_rate: int = 0.01,
          pretrained: bool = False,
-         export: bool = False):
+         pretrained_dir: str = None,
+         export: bool = False,
+         export_dir: str = None):
     training_set = nu.load_dataset(data_dir=input_dir,
                                    validation_split=validation_split,
                                    batch_size=batch_size,
@@ -29,7 +29,7 @@ def main(input_dir: str,
                                      subset="validation")
 
     if pretrained:
-        model = tf.saved_model.load(pretrained_dir)
+        model = nu.pretrained_model(pretrained_dir)
 
     else:
         model = tf.keras.models.Sequential(
@@ -40,7 +40,6 @@ def main(input_dir: str,
                 tf.keras.layers.Dense(units=64, activation='relu'),
                 tf.keras.layers.Dense(units=32, activation='relu'),
                 tf.keras.layers.Dense(units=num_of_classes)
-
             ])
 
     model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate),
@@ -51,7 +50,7 @@ def main(input_dir: str,
               epochs=num_of_epochs)
 
     if export:
-        tf.saved_model.save(model, export_dir=export_dir)
+        nu.export_model(model, export_dir)
 
 
 if __name__ == "__main__":

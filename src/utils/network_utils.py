@@ -25,3 +25,12 @@ def load_dataset(data_dir: str,
     ds = ds.cache().prefetch(buffer_size=autotune)
 
     return ds
+
+
+def pretrained_model(directory: str):
+    model = tf.saved_model.load(directory)
+    return model
+
+
+def export_model(model, export_dir):
+    tf.saved_model.save(model, export_dir=export_dir)

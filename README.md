@@ -24,6 +24,8 @@
 - finished making the dataset tools
 - made major progress creating the dataset
 
+#### Currently working on:
+- make alfonzo work while inheriting from clasifier 
 
 
 ### To do:

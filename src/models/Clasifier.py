@@ -1,4 +1,5 @@
 import typing
+import tensorflow as tf
 
 class Classifier:
 
@@ -8,12 +9,11 @@ class Classifier:
 
 
     def load_pretrained_model(self, path: str):
-        pass
+        self.model = tf.saved_model.load(path)
 
 
     def export_model(self, path: str):
-        pass
-
+        tf.saved_model.save(self.model, export_dir=path)
 
     def train(self, data):
         pass

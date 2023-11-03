@@ -32,9 +32,6 @@ def pretrained_model(directory: str):
     return model
 
 
-def export_model(model, export_dir):
-    tf.saved_model.save(model, export_dir=export_dir)
-
 
 def predict_image(img_dir: str, img_width: int, img_height: int, model):
     img = tf.keras.utils.load_img(path=img_dir,

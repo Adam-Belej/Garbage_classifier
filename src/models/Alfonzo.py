@@ -18,8 +18,4 @@ class Alfonzo(Classifier):
         self.model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.01),
                            loss=tf.keras.losses.SparseCategoricalCrossentropy())
 
-    def train(self, data):
-        self.model.fit(data,
-                       epochs=200,
-                       batch_size=64,
-                       validation_split=0.2)
+

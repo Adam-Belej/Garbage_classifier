@@ -1,11 +1,11 @@
 import tensorflow as tf
-from Clasifier import Classifier
+from models.Clasifier import Classifier
 
 
 class Alfonzo(Classifier):
 
     def __init__(self, num_of_classes):
-        super().__init__()
+        super().__init__(num_of_classes)
         self.model = tf.keras.models.Sequential(
             [
                 tf.keras.layers.Rescaling(1. / 255),
@@ -17,5 +17,3 @@ class Alfonzo(Classifier):
             ])
         self.model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.01),
                            loss=tf.keras.losses.SparseCategoricalCrossentropy())
-
-

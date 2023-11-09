@@ -6,7 +6,7 @@ class Classifier:
 
     def __init__(self,
                  num_of_classes: int,
-                 epochs: int = 100,
+                 epochs: int = 10,
                  batchsize: int = 32,
                  valsplit: int = 0.2):
         self.num_of_classes = num_of_classes

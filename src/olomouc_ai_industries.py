@@ -1,4 +1,5 @@
 import tensorflow as tf
+import matplotlib.pyplot as plt
 import utils.network_utils as nu
 from models.Alfonzo import Alfonzo
 import os
@@ -6,7 +7,7 @@ import os
 
 def main(input_dir: str,
          test_image: str,
-         num_of_classes: int = 3,
+         num_of_classes: int = 2,
          img_width: int = 512,
          img_height: int = 512):
     training_set = nu.load_dataset(data_dir=input_dir,
@@ -29,6 +30,27 @@ def main(input_dir: str,
                             height=img_height,
                             width=img_width)
     print("Score is ", score)
+    acc = history.history['accuracy']
+    val_acc = history.history['val_accuracy']
+    print("Calculating the loss")
+    loss = history.history['loss']
+    val_loss = history.history['val_loss']
+
+    epochs_range = range(alfonz.epochs)
+    print("The results are being visualized")
+    plt.figure(figsize=(8, 8))
+    plt.subplot(1, 2, 1)
+    plt.plot(epochs_range, acc, label='Training Accuracy')
+    plt.plot(epochs_range, val_acc, label='Validation Accuracy')
+    plt.legend(loc='lower right')
+    plt.title('Training and Validation Accuracy')
+    plt.subplot(1, 2, 2)
+
+    plt.plot(epochs_range, loss, label='Training Loss')
+    plt.plot(epochs_range, val_loss, label='Validation Loss')
+    plt.legend(loc='upper right')
+    plt.title('Training and Validation Loss')
+    plt.show()
 
 
 if __name__ == "__main__":

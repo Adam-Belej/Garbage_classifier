@@ -1,62 +1,43 @@
 import tensorflow as tf
-import matplotlib.pyplot as plt
 import utils.network_utils as nu
 from models.Alfonzo import Alfonzo
 import os
 
 
 def main(input_dir: str,
-         test_image: str,
-         num_of_classes: int = 2,
+         num_of_classes: int = 3,
          img_width: int = 512,
          img_height: int = 512):
-    training_set = nu.load_dataset(data_dir=input_dir,
-                                   img_width=img_width,
-                                   img_height=img_height,
-                                   subset="training")
-    validation_set = nu.load_dataset(data_dir=input_dir,
-                                     img_width=img_width,
-                                     img_height=img_height,
-                                     subset="validation")
 
     alfonz = Alfonzo(num_of_classes)
 
-    history = alfonz.train(training_data=training_set,
-                           validation_data=validation_set)
+    training_set = nu.load_dataset(data_dir=input_dir,
+                                   img_width=img_width,
+                                   img_height=img_height,
+                                   subset="training",
+                                   validation_split=alfonz.valsplit,
+                                   seed=123,
+                                   batch_size=alfonz.batchsize)
+    validation_set = nu.load_dataset(data_dir=input_dir,
+                                     img_width=img_width,
+                                     img_height=img_height,
+                                     subset="validation",
+                                     validation_split=alfonz.valsplit,
+                                     seed=123,
+                                     batch_size=alfonz.batchsize)
 
-    print("History is ", history.history)
+    alfonz.train(training_data=training_set,
+                 validation_data=validation_set)
 
-    score = alfonz.classify(data=test_image,
-                            height=img_height,
-                            width=img_width)
-    print("Score is ", score)
-    acc = history.history['accuracy']
-    val_acc = history.history['val_accuracy']
-    print("Calculating the loss")
-    loss = history.history['loss']
-    val_loss = history.history['val_loss']
+    print("History is ", alfonz.history)
 
-    epochs_range = range(alfonz.epochs)
-    print("The results are being visualized")
-    plt.figure(figsize=(8, 8))
-    plt.subplot(1, 2, 1)
-    plt.plot(epochs_range, acc, label='Training Accuracy')
-    plt.plot(epochs_range, val_acc, label='Validation Accuracy')
-    plt.legend(loc='lower right')
-    plt.title('Training and Validation Accuracy')
-    plt.subplot(1, 2, 2)
+    alfonz.make_graph_from_history("/home/adam/Projects/Garbage_Classifier_dataset/test/graph1.png")
 
-    plt.plot(epochs_range, loss, label='Training Loss')
-    plt.plot(epochs_range, val_loss, label='Validation Loss')
-    plt.legend(loc='upper right')
-    plt.title('Training and Validation Loss')
-    plt.show()
+    alfonz.export_model("/home/adam/Projects/Garbage_Classifier_dataset/test")
 
 
 if __name__ == "__main__":
     input_folder = input("Input directory: ")
     num_classes = int(input("Number of classes: "))
-    test_img = str(input("Image to classify: "))
     main(input_dir=input_folder,
-         num_of_classes=num_classes,
-         test_image=test_img)
+         num_of_classes=num_classes)

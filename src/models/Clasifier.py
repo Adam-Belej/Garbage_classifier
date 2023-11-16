@@ -7,9 +7,9 @@ class Classifier:
 
     def __init__(self,
                  num_of_classes: int,
-                 epochs: int = 2,
-                 batchsize: int = 16,
-                 valsplit: int = 0.2):
+                 epochs: int = 5,
+                 batchsize: int = 12,
+                 valsplit: int = 0.001):
         self.num_of_classes = num_of_classes
         self.epochs = epochs
         self.batchsize = batchsize
@@ -17,16 +17,18 @@ class Classifier:
 
 
     def load_pretrained_model(self, path: str):
-        self.model = tf.saved_model.load(path)
+        self.model = tf.keras.models.load_model(filepath=path)
 
 
     def export_model(self, path: str):
-        tf.saved_model.save(self.model, export_dir=path)
+        tf.keras.Model.save(self.model, filepath=path)
 
     def train(self, training_data, validation_data):
         history = self.model.fit(training_data,
-                                   epochs=self.epochs,
-                                   validation_data=validation_data)
+                                 epochs=self.epochs,
+                                 validation_data=validation_data,
+                                 steps_per_epoch=100,
+                                 shuffle=True)
         self.history = history
 
 
@@ -43,7 +45,7 @@ class Classifier:
         return score
 
 
-    def make_graph_from_history(self, graph_path):
+    def make_graph_from_history(self):
         acc = self.history.history['accuracy']
         val_acc = self.history.history['val_accuracy']
         print("Calculating the loss")
@@ -65,4 +67,3 @@ class Classifier:
         plt.legend(loc='upper right')
         plt.title('Training and Validation Loss')
         plt.show()
-        plt.savefig(graph_path)

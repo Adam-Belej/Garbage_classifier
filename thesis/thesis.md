@@ -66,9 +66,14 @@ $y = f(\sum_{i=1}^k w_i  x_i + b)$
 Mezi nejčastěji používané aktivační funkce patří logistická sigmoida[^1], ReLU (Rectified Linear Unit)[^1], hyperbolický tangens[^1] a softmax[^1]. 
 
 [^1]: LaTeXový vzorce a grafy přidám později (+ testuju footnotes)
-### 2.1.2 Vícevstrvý perceptron
+### 2.1.2 Vícevrstvý perceptron
 Vícevrstvý perceptron, někdy také nazýván jako dopředná neuronová síť, se skládá z několika vrstev perceptronů, které jsou na sebe napojeny. První (vstupní) vrstva dostává jako vstup přímo původní vstupní data, další (skryté) vrstvy pak výstupy z předchozích vrstev. Poslední (výstupní) vrstva většinou u klasifikace do více kategorií má tolik neuronů, kolik je kategorií.  
 # 3 Implementace
 ## 3.1 Software pro tvorbu a augmentaci vstupních dat
+### 3.1.1 Vstupní data
+Nejdříve bylo potřeba vytvořit vstupní data v podobě fotek odpadků. Všechny fotky byly foceny na pozadí, které jsem vytvořil z papíru a grafitu, a které by mělo napodobovat pohybující se pás na třídící lince.
+### 3.1.2 Zpracování a augmentace dat
+Jelikož se jedná o velký objem dat, bylo potřeba zautomatizovat proces přeformátování fotek na velikost 512x512 pixelů. K tomuto jsem použil knihovnu [Katna][https://pypi.org/project/katna/], která za pomocí umělé inteligence hledá důležitou část obrázku tak, aby při ořezávání došlo k co možná nejmenší ztrátě dat. 
 
+K augmentaci jsem použil knihovnu [Pillow][https://pypi.org/project/Pillow/]. Všechny obrázky byly nejdříve horizontálně převráceny, a pak otočeny o 90, 180 a 270°, což ve výsledku zosminásobilo objem vstupních dat.
 # 4 Závěr

@@ -1,6 +1,7 @@
 import typing
 import tensorflow as tf
 import matplotlib.pyplot as plt
+import utils.network_utils as nu
 
 
 class Classifier:
@@ -67,3 +68,13 @@ class Classifier:
         plt.legend(loc='upper right')
         plt.title('Training and Validation Loss')
         plt.show()
+
+    def test_accuracy(self, test_data_dir: str,
+                      img_width: int = 512,
+                      img_height: int = 512):
+        test_ds = nu.load_dataset(data_dir=test_data_dir,
+                        img_width=img_width,
+                        img_height=img_height)
+
+        self.evaluation = self.model.evaluate(test_ds)
+

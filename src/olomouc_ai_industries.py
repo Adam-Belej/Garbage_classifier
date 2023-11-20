@@ -5,6 +5,7 @@ import os
 
 
 def main(input_dir: str,
+         test_dir: str,
          num_of_classes: int = 3,
          img_width: int = 512,
          img_height: int = 512):
@@ -26,15 +27,19 @@ def main(input_dir: str,
                                      seed=123,
                                      batch_size=alfonz.batchsize)
 
+    alfonz.load_pretrained_model("/home/adam/Projects/Garbage_Classifier_dataset/test/model.keras")
+    alfonz.model.summary()
     alfonz.train(training_data=training_set,
                  validation_data=validation_set)
 
     print("History is ", alfonz.history)
 
-    alfonz.make_graph_from_history("/home/adam/Projects/Garbage_Classifier_dataset/test/graph1.png")
+    alfonz.make_graph_from_history()
 
-    alfonz.export_model("/home/adam/Projects/Garbage_Classifier_dataset/test")
-
+    alfonz.test_accuracy(test_data_dir=test_dir,
+                         img_width=img_width,
+                         img_height=img_height)
+    print(alfonz.evaluation)
 
 if __name__ == "__main__":
     input_folder = input("Input directory: ")

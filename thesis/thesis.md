@@ -61,13 +61,26 @@ Obsah
 ## 2.1 Neuronová síť
 Neuronová síť je složena z mnoha jednotek - neuronů, které jsou mezi sebou propojeny a komunikují mezi sebou. U počítačových neuronových sítí je mnoho druhů, v této části se však budu věnovat pouze vícevrstvým perceptronům (MLP - Multilayer perceptron), které jsem pro tuto práci použil.
 ### 2.1.1 Perceptron
-Perceptron je základní jednotkou počítačových neuronových sítí, a jeho jádrem je algoritmus, který pro vstupní matici *x* o délce *k* spočítá skalární součin s vektorem váh (weights) *w* a přičte k nim práh (bias) *b*, a následně na toto číslo použije aktivační funkci *f*. Vzorcem se to dá vyjádřit jako:
+Perceptron je základní jednotkou počítačových neuronových sítí, a jeho jádrem je algoritmus, který pro matici vstupních dat $x$ o délce $k$ spočítá skalární součin s vektorem váh (weights) $w$ a přičte k nim práh (bias) $b$, a následně na toto číslo použije aktivační funkci $f$. Vzorcem se to dá vyjádřit jako:
 $y = f(\sum_{i=1}^k w_i  x_i + b)$
-Mezi nejčastěji používané aktivační funkce patří logistická sigmoida[^1], ReLU (Rectified Linear Unit)[^1], hyperbolický tangens[^1] a softmax[^1]. 
+Mezi nejčastěji používané aktivační funkce patří logistická sigmoida[^1], ReLU (Rectified Linear Unit)[^1], hype rbolický tangens[^1] a softmax[^1]. 
 
 [^1]: LaTeXový vzorce a grafy přidám později (+ testuju footnotes)
 ### 2.1.2 Vícevrstvý perceptron
 Vícevrstvý perceptron, někdy také nazýván jako dopředná neuronová síť, se skládá z několika vrstev perceptronů, které jsou na sebe napojeny. První (vstupní) vrstva dostává jako vstup přímo původní vstupní data, další (skryté) vrstvy pak výstupy z předchozích vrstev. Poslední (výstupní) vrstva většinou u klasifikace do více kategorií má tolik neuronů, kolik je kategorií.  
+### 2.1.3 Husté neuronové sítě
+Husté neuronové sítě jsou druh sítí, kde každý neuron v dané vrstvě dostává jako vstup celou vstupní matici z předchozí vrstvy (v případě první vrstvy vstup od uživatele), a pro vstupní matici o délce $k$ má $k + 1$ paramterů (váhy pro každé $x_i$ a práh), a vstup pro n+1 vstrvu je matice výstupů n-té vrstvy o délce $l$, kde $l$ je počet neuronů  n-té vrstvy. Tento druh sítí je pro účely rozpoznávání obrázků silně neefektivní, o čemž svědčí i výsledky testování takovéto sítě (wip, přidám výsledky trénování, testování, grafy). Implmentace této sítě vypadá následovně: 
+`tf.keras.models.Sequential(
+            [
+                tf.keras.layers.Rescaling(1. / 255),
+                tf.keras.layers.Flatten(),
+                tf.keras.layers.Dense(units=128, activation='relu'),
+                tf.keras.layers.Dense(units=64, activation='relu'),
+                tf.keras.layers.Dense(units=32, activation='relu'),
+                tf.keras.layers.Dense(units=16, activation='relu'),
+                tf.keras.layers.Dense(units=num_of_classes)
+            ])`
+
 # 3 Implementace
 ## 3.1 Software pro tvorbu a augmentaci vstupních dat
 ### 3.1.1 Vstupní data

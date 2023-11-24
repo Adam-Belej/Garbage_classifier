@@ -21,7 +21,6 @@
 
 Šternberk 2023
 
-
 **Prohlášení**
 Prohlašuji, že jsem svou práci SOČ vypracoval samostatně a použil jsem pouze prameny
 a literaturu uvedené v seznamu bibliografických záznamů.
@@ -61,11 +60,16 @@ Obsah
 ## 2.1 Neuronová síť
 Neuronová síť je složena z mnoha jednotek - neuronů, které jsou mezi sebou propojeny a komunikují mezi sebou. U počítačových neuronových sítí je mnoho druhů, v této části se však budu věnovat pouze vícevrstvým perceptronům (MLP - Multilayer perceptron), které jsem pro tuto práci použil.
 ### 2.1.1 Perceptron
-Perceptron je základní jednotkou počítačových neuronových sítí, a jeho jádrem je algoritmus, který pro matici vstupních dat $x$ o délce $k$ spočítá skalární součin s vektorem váh (weights) $w$ a přičte k nim práh (bias) $b$, a následně na toto číslo použije aktivační funkci $f$. Vzorcem se to dá vyjádřit jako:
-$y = f(\sum_{i=1}^k w_i  x_i + b)$
-Mezi nejčastěji používané aktivační funkce patří logistická sigmoida[^1], ReLU (Rectified Linear Unit)[^1], hype rbolický tangens[^1] a softmax[^1]. 
+Perceptron je základní jednotkou počítačových neuronových sítí, a jeho jádrem je algoritmus, který pro matici vstupních dat $x$ o délce $k$ spočítá skalární součin s vektorem váh (weights) $w$ a přičte k nim práh (bias) $b$, a následně na toto číslo použije aktivační funkci $g$. Vzorcem se to dá vyjádřit jako:
+$f(x) = g(\sum_{i=1}^k w_i  x_i + b)$
+Mezi nejčastěji používané aktivační funkce patří:
 
-[^1]: LaTeXový vzorce a grafy přidám později (+ testuju footnotes)
+- logistická sigmoida $g(z) = \frac{1}{1 + e^-z}$, 
+- ReLU (Rectified Linear Unit)[^2], 
+- hyperbolický tangens (tanh)[^2],
+- softmax[^2]. 
+
+[^2]: LaTeXový vzorce a grafy přidám později (+ testuju footnotes)
 ### 2.1.2 Vícevrstvý perceptron
 Vícevrstvý perceptron, někdy také nazýván jako dopředná neuronová síť, se skládá z několika vrstev perceptronů, které jsou na sebe napojeny. První (vstupní) vrstva dostává jako vstup přímo původní vstupní data, další (skryté) vrstvy pak výstupy z předchozích vrstev. Poslední (výstupní) vrstva většinou u klasifikace do více kategorií má tolik neuronů, kolik je kategorií.  
 ### 2.1.3 Husté neuronové sítě
@@ -84,9 +88,11 @@ Husté neuronové sítě jsou druh sítí, kde každý neuron v dané vrstvě do
 # 3 Implementace
 ## 3.1 Software pro tvorbu a augmentaci vstupních dat
 ### 3.1.1 Vstupní data
-Nejdříve bylo potřeba vytvořit vstupní data v podobě fotek odpadků. Všechny fotky byly foceny na pozadí, které jsem vytvořil z papíru a grafitu, a které by mělo napodobovat pohybující se pás na třídící lince.
-### 3.1.2 Zpracování a augmentace dat
-Jelikož se jedná o velký objem dat, bylo potřeba zautomatizovat proces přeformátování fotek na velikost 512x512 pixelů. K tomuto jsem použil knihovnu [Katna][https://pypi.org/project/katna/], která za pomocí umělé inteligence hledá důležitou část obrázku tak, aby při ořezávání došlo k co možná nejmenší ztrátě dat. 
+Nejdříve bylo potřeba vytvořit vstupní data v podobě fotek odpadků. Všechny fotky byly foceny na pozadí, které jsem vytvořil z papíru a grafitu, a které má napodobovat pohybující se pás na třídící lince.
+### 3.1.2 Zpracování a tvorba dat
+Bylo potřeba sjednotit formát dat, aby bylo možné je použít jako vstup pro neuronové sítě. Zároveň jsem zvolil poměr stran 1:1, aby byla jednodušší následná augmentace. Jelikož se jedná o velký objem dat, bylo potřeba zautomatizovat celý proces přeformátování fotek na velikost 512x512 pixelů, která by měla dostatečně zachovat objekty na fotkách, ale zároveň nebýt tak velká, aby velikost dat výrazně neztížila proces trénování sítí. K tomuto jsem nejprve použil knihovnu [Katna][https://pypi.org/project/katna/], která s využitím umělé inteligence hledá důležitou část obrázku tak, aby při ořezávání došlo k co možná nejmenší ztrátě dat. S její pomocí jsem obrázky přeformároval na poměr stran 1:1. Pak jsem využil knihovny  [Pillow][https://pypi.org/project/Pillow/] ke konverzi do formátu png a zmenšení obrázků na formát 512x512 pixelů.
+### 3.1.3 Datová augmentace
+Datová augmentace je pomětně rozšířená technika, při které se původní dataset rozšíří tím, že se mírně poupraví nebo pozmění původní data..
 
-K augmentaci jsem použil knihovnu [Pillow][https://pypi.org/project/Pillow/]. Všechny obrázky byly nejdříve horizontálně převráceny, a pak otočeny o 90, 180 a 270°, což ve výsledku zosminásobilo objem vstupních dat.
+K augmentaci obrázků, které již byly v požadovaném formátu jsem použil opět knihovnu [Pillow][https://pypi.org/project/Pillow/]. Všechny obrázky byly nejdříve horizontálně převráceny, a pak otočeny o 90, 180 a 270°. Tímto způsobem jsem efektivně zosminádobil vstupní data pro trénování.
 # 4 Závěr

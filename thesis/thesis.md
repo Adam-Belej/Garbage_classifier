@@ -70,9 +70,9 @@ Perceptron je základní jednotkou počítačových neuronových sítí, a jeho 
 $f(x) = g(\sum_{i=1}^k w_i  x_i + b)$
 Mezi nejčastěji používané aktivační funkce patří:
 
-- logistická sigmoida $g(z) = \frac{1}{1 + e^-z}$, 
-- ReLU (Rectified Linear Unit) $g(z) = max(0, z)$, 
-- hyperbolický tangens $g(z) = tanh(z)$,
+- logistická sigmoida $g(z) = \frac{1}{1 + e^-z}$ (obr. 2.1), 
+- ReLU (Rectified Linear Unit) $g(z) = max(0, z)$ (obr. 2.2), 
+- hyperbolický tangens $g(z) = tanh(z)$ (obr. 2.3),
 - softmax[^1]. 
 
 [^1]: LaTeXový vzorce a grafy přidám později (+ testuju footnotes)

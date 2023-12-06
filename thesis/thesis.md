@@ -72,7 +72,7 @@ Perceptron je základní jednotkou počítačových neuronových sítí, a jeho 
 $f(x) = g(\sum_{i=1}^k w_i  x_i + b)$
 Mezi nejčastěji používané aktivační funkce patří:
 
-- logistická sigmoida $g(z) = \frac{1}{1 + e^-z}$ (obr. 2.1), 
+- logistická sigmoida $g(z) = \frac{1}{1 + e^{-z}}$ (obr. 2.1), 
 - ReLU (Rectified Linear Unit) $g(z) = max(0, z)$ (obr. 2.2), 
 - hyperbolický tangens $g(z) = tanh(z)$ (obr. 2.3),
 - softmax[^1].
@@ -83,7 +83,7 @@ Mezi nejčastěji používané aktivační funkce patří:
 Vícevrstvý perceptron, někdy také nazýván jako dopředná neuronová síť, se skládá z několika vrstev perceptronů, které jsou na sebe napojeny. První (vstupní) vrstva dostává jako vstup přímo původní vstupní data, další (skryté) vrstvy pak výstupy z předchozích vrstev. Poslední (výstupní) vrstva většinou u klasifikace do více kategorií má tolik neuronů, kolik je kategorií.  
 
 ### 2.1.3 Husté neuronové sítě
-Husté neuronové sítě jsou druh sítí, kde každý neuron v dané vrstvě dostává jako vstup celou vstupní matici z předchozí vrstvy (v případě první vrstvy vstup od uživatele), a pro vstupní matici o délce $k$ má $k + 1$ paramterů (váhy pro každé $x_i$ a práh), a vstup pro n+1 vstrvu je matice výstupů n-té vrstvy o délce $l$, kde $l$ je počet neuronů  n-té vrstvy. Tento druh sítí je pro účely rozpoznávání obrázků silně neefektivní, o čemž svědčí i výsledky testování takovéto sítě (graf na obrázku 2.1), kde se po druhé epoše přesnost modelu na trénovacím datasetu zasekla na 0.5827, a výsledná přesnost na testovacích datech byla (ve vlaku není wifi, pak to číslo z kagglu dopíšu zpětně). Implmentace této sítě v kódu vypadá následovně:
+Husté neuronové sítě jsou druh sítí, kde každý neuron v dané vrstvě dostává jako vstup celou vstupní matici z předchozí vrstvy (v případě první vrstvy vstup od uživatele), a pro vstupní matici o délce $k$ má $k + 1$ paramterů (váhy pro každé $x_i$ a práh), a vstup pro n+1 vstrvu je matice výstupů n-té vrstvy o délce $l$, kde $l$ je počet neuronů  n-té vrstvy. Tento druh sítí je pro účely rozpoznávání obrázků silně neefektivní, o čemž svědčí i výsledky testování takovéto sítě (graf na obrázku 2.1), kde se po druhé epoše přesnost modelu na trénovacím datasetu zastavila na 0.5827, a výsledná přesnost na testovacích datech byla (ve vlaku není wifi, pak to číslo z kagglu dopíšu zpětně). Implmentace této sítě v kódu vypadá následovně:
 
 ```
 tf.keras.models.Sequential(

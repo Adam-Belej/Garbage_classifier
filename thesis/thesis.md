@@ -62,13 +62,17 @@ Obsah
 # 1 Úvod
 
 
-# 2 Teoretická Část
+# 2 Neuronové sítě
 
 ## 2.1 Neuronová síť
-Neuronová síť je složena z mnoha jednotek - neuronů, které jsou mezi sebou propojeny a komunikují mezi sebou. U počítačových neuronových sítí je mnoho druhů, v této části se však budu věnovat pouze vícevrstvým perceptronům (MLP - Multilayer perceptron), které jsem pro tuto práci použil.
+Neuronová síť je složena z mnoha jednotek - neuronů, které jsou mezi sebou propojeny a komunikují mezi sebou. Využívají se v mnoha dovětvích k široké škále úkonů, mezi nimi je například zpracování a porozumění přirozenému textu, rozpoznávání obrázků nebo jejich částí (computer vision) či cílení reklamy či obsahu ve virtuálním prostředí na základě analýzy jeho zájmů. 
 
-### 2.1.1 Perceptron
-Perceptron je základní jednotkou počítačových neuronových sítí, a jeho jádrem je algoritmus, který pro matici vstupních dat $x$ o délce $k$ spočítá skalární součin s vektorem váh (weights) $w$ a přičte k nim práh (bias) $b$, a následně na toto číslo použije aktivační funkci $g$. Vzorcem se to dá vyjádřit jako:
+Je mnoho způsobů, jak tyto sítě implementovat v programu. Jednou z možností je od základů naprogramovat sítě včetně chybové funkce a učení, častější volbou je však některá z mnoha knihoven, které nabízí již optimalizované a uživatelsky přívětivější navrhování architektury, přípravu a manipulaci s daty, trénink a následnou evaluaci sítí. Mezi některé knihovny patří například [TensorFlow][https://www.tensorflow.org/], [PyTorch][https://pytorch.org/], [Caffe][http://caffe.berkeleyvision.org/] v jazyce Python, v jazyce Java se dá použít knihovna [Deeplearning4j][https://deeplearning4j.konduit.ai/]. Pro svou práci jsem zvolil knihovnu TensorFlow, jelikož je velice dobře zdokumentovaná, má širokou škálu možností trénování a navrhování neuronových sítí, a také umožňuje velmi jednoduše vizualizovat proces trénování a následnou úspěšnost.
+
+V dnešní době je již hluboké učení na vysoké úrovni. V tuhle chvíli dosahují nejlepších výsledků při rozpoznávání obrázků a zpracování přirozeného jazyka transformátory, jejichž použití je v amatérském prostředí velmi výpočetně a časově náročné. Proto jsem se rozhodl použít primárně konvoluční neuronové sítě (CNN - Convolutional neural network).
+
+### 2.1.1 Neuron
+Neuron je základní jednotkou počítačových neuronových sítí, a jeho jádrem je algoritmus, který pro matici vstupních dat $x$ o délce $k$ spočítá skalární součin s vektorem váh (weights) $w$ a přičte k nim práh (bias) $b$, a následně na toto číslo použije aktivační funkci $g$. Vzorcem se to dá vyjádřit jako:
 $f(x) = g(\sum_{i=1}^k w_i  x_i + b)$
 Mezi nejčastěji používané aktivační funkce patří:
 
@@ -80,6 +84,7 @@ Mezi nejčastěji používané aktivační funkce patří:
 [^1]: LaTeXový vzorce a grafy přidám později (+ testuju footnotes)
 
 ### 2.1.2 Vícevrstvý perceptron
+**wip, přepíšu/smažu protože je to inaccurate a zavádějící**
 Vícevrstvý perceptron, někdy také nazýván jako dopředná neuronová síť, se skládá z několika vrstev perceptronů, které jsou na sebe napojeny. První (vstupní) vrstva dostává jako vstup přímo původní vstupní data, další (skryté) vrstvy pak výstupy z předchozích vrstev. Poslední (výstupní) vrstva většinou u klasifikace do více kategorií má tolik neuronů, kolik je kategorií.  
 
 ### 2.1.3 Husté neuronové sítě

@@ -65,23 +65,42 @@ Obsah
 # 2 Neuronové sítě
 
 ## 2.1 Neuronová síť
-Neuronová síť je složena z mnoha jednotek - neuronů, které jsou mezi sebou propojeny a komunikují mezi sebou. Využívají se v mnoha dovětvích k široké škále úkonů, mezi nimi je například zpracování a porozumění přirozenému textu, rozpoznávání obrázků nebo jejich částí (computer vision) či cílení reklamy či obsahu ve virtuálním prostředí na základě analýzy jeho zájmů. 
+Neuronová síť je složena z mnoha jednotek - neuronů, které jsou mezi sebou propojeny a komunikují mezi sebou. Využívají se v mnoha odvětvích k široké škále úkonů, mezi nimi je například zpracování a porozumění přirozenému textu, rozpoznávání obrázků nebo jejich částí (computer vision) či cílení reklamy a obsahu ve virtuálním prostředí na základě analýzy zájmů uživatele. 
 
-Je mnoho způsobů, jak tyto sítě implementovat v programu. Jednou z možností je od základů naprogramovat sítě včetně chybové funkce a učení, častější volbou je však některá z mnoha knihoven, které nabízí již optimalizované a uživatelsky přívětivější navrhování architektury, přípravu a manipulaci s daty, trénink a následnou evaluaci sítí. Mezi některé knihovny patří například [TensorFlow][https://www.tensorflow.org/], [PyTorch][https://pytorch.org/], [Caffe][http://caffe.berkeleyvision.org/] v jazyce Python, v jazyce Java se dá použít knihovna [Deeplearning4j][https://deeplearning4j.konduit.ai/]. Pro svou práci jsem zvolil knihovnu TensorFlow, jelikož je velice dobře zdokumentovaná, má širokou škálu možností trénování a navrhování neuronových sítí, a také umožňuje velmi jednoduše vizualizovat proces trénování a následnou úspěšnost.
+Je mnoho způsobů, jak tyto sítě implementovat v programu. Jednou z možností je od základů naprogramovat neuronové sítě včetně chybové funkce a učení, častější volbou je však některá z mnoha knihoven, které nabízí již optimalizované a uživatelsky přívětivější navrhování architektury, přípravu a manipulaci s daty, trénink a následnou evaluaci výsledků sítě. Mezi některé knihovny patří například [TensorFlow][https://www.tensorflow.org/], [PyTorch][https://pytorch.org/], [Caffe][http://caffe.berkeleyvision.org/] v jazyce Python, v jazyce Java se dá použít knihovna [Deeplearning4j][https://deeplearning4j.konduit.ai/]. Pro svou práci jsem zvolil knihovnu TensorFlow, jelikož je velice dobře zdokumentovaná, má širokou škálu možností trénování a navrhování neuronových sítí, a také umožňuje velmi jednoduše vizualizovat proces trénování a následnou úspěšnost.
 
-V dnešní době je již hluboké učení na vysoké úrovni. V tuhle chvíli dosahují nejlepších výsledků při rozpoznávání obrázků a zpracování přirozeného jazyka transformátory, jejichž použití je v amatérském prostředí velmi výpočetně a časově náročné. Proto jsem se rozhodl použít primárně konvoluční neuronové sítě (CNN - Convolutional neural network).
+V dnešní době je již hluboké učení na vysoké úrovni. V tuhle chvíli dosahují nejlepších výsledků při rozpoznávání obrázků a zpracování přirozeného jazyka transformátory, jejichž použití je v amatérském prostředí velmi výpočetně a časově náročné. Proto jsem se rozhodl použít primárně konvoluční neuronové sítě (CNN - Convolutional neural network), které jsou výrazně méně výpočetně náročné, a které doshují taktéž velmi kvalitních výsledků u rozpoznávání obrázků.
+
+### 2.1.1 Vstupní data
+Vzhledem k tomu, že k natrénování neuronové sítě dosahující přijatelných výsledků je potřeba obrovské množství dat, bylo nutné vytvořit co možná největší dataset fotografií tříděného odpadu ve všech třech kategoriích. Jedna z možností byla stáhnout již existující dataset z některého z internetových zdrojů (např. [Kaggle][https://www.kaggle.com/]), žádný z nich však nebyl dostatečný, obrázky měly často velmi odlišný formát, rozměry nebo kvalitu. Další možností bylo vytvořit dataset z obrázků nalezených na internetu, tahle možnost však měla opět nevýhodu rozdílné kvality, rozměrů a navíc byla oproti první možnosti časově náročnější s nepatrným zlepšením kvality výsledného datasetu. Proto jsme zvolili třetí variantu, kterou bylo vytvoření úplně nového vlastního datasetu. Tato možnost byla sice zdaleka časově nejnáročnější, ale výsledné obrázky mají všechny stejnou velikost, rozměry a kvalitu. Všechny fotky byly foceny na pozadí, které bylo vytvořeno z papíru a grafitu, a které napodobuje pohybující se pás na třídící lince. **doplnit sample obrázky pro představu**
+
+### 2.1.2 Zpracování a tvorba dat
+
+
+Bylo potřeba sjednotit formát dat, aby bylo možné je použít jako vstup pro neuronové sítě. Zároveň jsem zvolil poměr stran 1:1, aby byla jednodušší následná augmentace. Jelikož se jedná o velký objem dat, bylo potřeba zautomatizovat celý proces přeformátování fotek na velikost 512x512 pixelů, která by měla dostatečně zachovat objekty na fotkách, ale zároveň nebýt tak velká, aby velikost dat výrazně neztížila proces trénování sítí. K tomuto jsem nejprve použil knihovnu [Katna][https://pypi.org/project/katna/], která s využitím umělé inteligence hledá důležitou část obrázku tak, aby při ořezávání došlo k co možná nejmenší ztrátě dat. S její pomocí jsem obrázky přeformároval na poměr stran 1:1. Pak jsem využil knihovny  [Pillow][https://pypi.org/project/Pillow/] ke konverzi do formátu png a zmenšení obrázků na formát 512x512 pixelů.
+
+### 2.1.3 Datová augmentace
+Datová augmentace je pomětně rozšířená technika, při které se původní dataset rozšíří tím, že se mírně poupraví nebo pozmění původní data.
+
+K augmentaci obrázků, které již byly v požadovaném formátu jsem použil opět knihovnu [Pillow][https://pypi.org/project/Pillow/]. Všechny obrázky byly nejdříve horizontálně převráceny, a pak otočeny o 90, 180 a 270°. Tímto způsobem jsem efektivně zosminádobil vstupní data pro trénování.
+
+Celý proces od přeformátování až po augmentaci je zautomatizován v programu 'dataset-creator.py', který je co nejvíce generalizován tak, aby jej bylo možné využívat i pro budoucí projekty s jiným požadovaným formátem či velikostí obrázků. Tento program je spustitelný z terminálu, a jako vstupní parametry přijímá:
+- šířku -W nebo --width (integer),
+- výšku -H nebo --height (integer),
+- cestu ke složce se vstupními soubory -i nebo --input_dir (string),
+- cestu, kam následně uložit upravené fotky -o nebo --output_dir (string),
+- formát, ve kterém budou fotky uloženy -e nebo --extension (string),
+- zda augmentovat data, nebo je jen konvertovat na požadovanou velikost -a nebo --augmentation (bool)
 
 ### 2.1.1 Neuron
 Neuron je základní jednotkou počítačových neuronových sítí, a jeho jádrem je algoritmus, který pro matici vstupních dat $x$ o délce $k$ spočítá skalární součin s vektorem váh (weights) $w$ a přičte k nim práh (bias) $b$, a následně na toto číslo použije aktivační funkci $g$. Vzorcem se to dá vyjádřit jako:
 $f(x) = g(\sum_{i=1}^k w_i  x_i + b)$
 Mezi nejčastěji používané aktivační funkce patří:
 
-- logistická sigmoida $g(z) = \frac{1}{1 + e^{-z}}$ (obr. 2.1), 
-- ReLU (Rectified Linear Unit) $g(z) = max(0, z)$ (obr. 2.2), 
-- hyperbolický tangens $g(z) = tanh(z)$ (obr. 2.3),
-- softmax[^1].
-
-[^1]: LaTeXový vzorce a grafy přidám později (+ testuju footnotes)
+- logistická sigmoida $g(z) = \frac{1}{1 + e^{-z}}$ (obr. ), 
+- hyperbolický tangens $g(z) = tanh(z)$ (obr. ),
+- ReLU (Rectified Linear Unit)[^1] $g(z) = max(0, z)$ (obr. ), 
+- softmax
 
 ### 2.1.2 Vícevrstvý perceptron
 **wip, přepíšu/smažu protože je to inaccurate a zavádějící**
@@ -104,30 +123,9 @@ tf.keras.models.Sequential(
 
 ```
 
-![Obrázek 2.1 - graf přesnosti a ztráty trénovacích a validačních dat během trénování](/images/dense_graph.png)
+![graf přesnosti a ztráty trénovacích a validačních dat během trénování](/images/dense_graph.png)
 
-# 3 Implementace
+# 3 Závěr
 
-## 3.1 Software pro tvorbu a augmentaci vstupních dat
-
-### 3.1.1 Vstupní data
-Nejdříve bylo potřeba vytvořit vstupní data v podobě fotek odpadků. Všechny fotky byly foceny na pozadí, které jsem vytvořil z papíru a grafitu, a které má napodobovat pohybující se pás na třídící lince.
-
-### 3.1.2 Zpracování a tvorba dat
-Bylo potřeba sjednotit formát dat, aby bylo možné je použít jako vstup pro neuronové sítě. Zároveň jsem zvolil poměr stran 1:1, aby byla jednodušší následná augmentace. Jelikož se jedná o velký objem dat, bylo potřeba zautomatizovat celý proces přeformátování fotek na velikost 512x512 pixelů, která by měla dostatečně zachovat objekty na fotkách, ale zároveň nebýt tak velká, aby velikost dat výrazně neztížila proces trénování sítí. K tomuto jsem nejprve použil knihovnu [Katna][https://pypi.org/project/katna/], která s využitím umělé inteligence hledá důležitou část obrázku tak, aby při ořezávání došlo k co možná nejmenší ztrátě dat. S její pomocí jsem obrázky přeformároval na poměr stran 1:1. Pak jsem využil knihovny  [Pillow][https://pypi.org/project/Pillow/] ke konverzi do formátu png a zmenšení obrázků na formát 512x512 pixelů.
-
-### 3.1.3 Datová augmentace
-Datová augmentace je pomětně rozšířená technika, při které se původní dataset rozšíří tím, že se mírně poupraví nebo pozmění původní data.
-
-K augmentaci obrázků, které již byly v požadovaném formátu jsem použil opět knihovnu [Pillow][https://pypi.org/project/Pillow/]. Všechny obrázky byly nejdříve horizontálně převráceny, a pak otočeny o 90, 180 a 270°. Tímto způsobem jsem efektivně zosminádobil vstupní data pro trénování.
-
-Celý proces od přeformátování až po augmentaci je zautomatizován v programu 'dataset-creator.py', který je co nejvíce generalizován tak, aby jej bylo možné využívat i pro budoucí projekty s jiným požadovaným formátem či velikostí obrázků. Tento program je spustitelný z terminálu, a jako vstupní parametry přijímá:
-- šířku -W nebo --width (integer),
-- výšku -H nebo --height (integer),
-- cestu ke složce se vstupními soubory -i nebo --input_dir (string),
-- cestu, kam následně uložit upravené fotky -o nebo --output_dir (string),
-- formát, ve kterém budou fotky uloženy -e nebo --extension (string),
-- zda augmentovat data, nebo je jen konvertovat na požadovanou velikost -a nebo --augmentation (bool)
-
-
-# 4 Závěr
+# Zdroje
+[^1]: https://machinelearningmastery.com/rectified-linear-activation-function-for-deep-learning-neural-networks/

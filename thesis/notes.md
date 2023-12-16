@@ -9,16 +9,17 @@
 - [x] pozadí, simulace pásu atd.
 ### 4 popsat program pro tvoření datasetu  
 - [x] knihovny, funkce, použitelnost dál!!, augmentace
-- [ ] jak jsem se snažil data zobecnit aby neoverfitovaly (pokud se to povede - trénovat i testovat dvakrát - jednou jenom s mojema datama, podruhé s datama naředěnýma z internetu)
 ### 5 neuron
-- [ ] matika za tím (possibly grafy)
+- [x] matika za tím (possibly grafy)
 - [x] aktivační funkce + grafy,
-- [ ] učení + back prop
-- [ ] hustý sítě + proč hustý nefungujou (architektura, graf a výsledky trénování husté sítě)
+- [x] učení + back prop
+- [x] hustý sítě + proč hustý nefungujou (architektura, graf a výsledky trénování husté sítě)
 ### 6 konvoluční sítě
 - [ ] teoretickej úvod, konvoluce, maxpool, padding + stride
 - [ ] alexnet a lenet (z nich vycházím)
 - [ ] architektura mojí konvolučky
+- [ ] oh no, našich datech to overfittuje! - jak jsem se snažil data zobecnit aby neoverfitovaly - naředíme datama z internetu
+- [ ] jaký výsledky měla která síť když jsme a) trénovali na našich datech - výsledky na našich + stažených datech, b) trénovali na datech namíchaných z internetu
 - [ ] výsledky + graf
 ### 7 závěr
 - [ ] výseldky, jestli jsou good nebo ne, proč to bylo smysluplný, jak se to dá použít/použije dál

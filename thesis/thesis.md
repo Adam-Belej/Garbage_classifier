@@ -72,8 +72,8 @@ zvolil knihovnu TensorFlow, jelikož je velice dobře zdokumentovaná, má širo
 jednoduše vizualizovat proces trénování a následnou úspěšnost.
 
 V dnešní době je již hluboké učení na vysoké úrovni. Aktuálně dosahují
-nejlepších výsledků při rozpoznávání obrázků a zpracování přirozeného jazyka
-transformátory [^1], jejichž použití je v amatérském prostředí velmi výpočetně
+nejlepších výsledků nejen při rozpoznávání obrázků a zpracování přirozeného jazyka
+transformátory [^1]. O tomto svědčí i skutečnost, že v letošním roce dosáhl nejlepších výsledků pro rozpoznávání obrázků na datasetu ImageNet model OmniVec[^a], jež v jádru využívá právě transformátorů.  Jejichž použití je však v amatérském prostředí velmi výpočetně
 a časově náročné. Proto jsme se rozhodli použít primárně konvoluční neuronové
 sítě (CNN), které jsou výrazně méně výpočetně
 náročné, a které dosahují taktéž velmi kvalitních výsledků u rozpoznávání
@@ -84,8 +84,8 @@ obrázků.
 Vzhledem k tomu, že k natrénování neuronové sítě dosahující přijatelných
 výsledků je potřeba obrovské množství dat, bylo nutné vytvořit co možná
 největší dataset fotografií tříděného odpadu ve všech třech kategoriích. Jedna
-z možností byla stáhnout již existující dataset z některého z internetových
-zdrojů (např. [Kaggle](https://www.kaggle.com/)), žádný z nich však nebyl
+z možností byla pou69t již existující dataset z některého z dostupných
+zdrojů (např. Kaggle[^d]), žádný z nich však nebyl
 v tak vysoké kvalitě, o jakou jsme se pokoušeli, obrázky byly často velmi nízkého rozlišení, jejich obsah výrazně rozmazaný nebo i pro lidské oko často špatně rozpoznatelný.
 Další možností bylo vytvořit dataset z obrázků nalezených na internetu, tahle
 možnost však měla opět nevýhodu rozdílné kvality a navíc byla oproti
@@ -103,25 +103,26 @@ napodobuje pohybující se pás na třídící lince.
 ### 2.1.2 Zpracování a tvorba dat
 
 Bylo nutné sjednotit formát dat, aby bylo možné je použít jako vstup pro
-neuronové sítě. Zároveň jsme zvolili poměr stran 1:1, aby byla jednodušší
+neuronovou síť. Zároveň jsme zvolili poměr stran 1:1, aby byla jednodušší
 následná augmentace. Jelikož se jedná o velký objem dat, bylo potřeba
 zautomatizovat celý proces přeformátování fotek na velikost 512x512 pixelů,
 která by měla dostatečně zachovat objekty na fotkách, ale zároveň nebýt tak
 velká, aby velikost dat výrazně neztížila proces trénování sítí. K tomuto jsme
-nejprve použili knihovnu [Katna](https://pypi.org/project/katna/), která
+nejprve použili knihovnu Katna[^b], která
 s využitím umělé inteligence hledá důležitou část obrázku tak, aby při
 ořezávání došlo k co možná nejmenší ztrátě dat. S její pomocí jsme obrázky
 přeformátovali na poměr stran 1:1. Dále jsme využili knihovny
-[Pillow](https://pypi.org/project/Pillow/) ke konverzi do formátu png
+Pillow[^c] ke konverzi do formátu png
 a zmenšení obrázků na jednotný formát 224x224 pixelů.
 
 ### 2.1.3 Datová augmentace
+
 Datová augmentace je technika, při které se původní dataset rozšíří tím, že se
 mírně poupraví nebo pozmění původní data a následně se přidají k původním
 datům. 
 
 K augmentaci obrázků, které již byly v požadovaném formátu jsem použil opět
-knihovnu [Pillow](https://pypi.org/project/Pillow/). Všechny obrázky byly
+knihovnu Pillow[^c]. Všechny obrázky byly
 nejdříve horizontálně převráceny, a pak otočeny o 90, 180 a 270°. Tímto
 způsobem jsem efektivně zosminádobil vstupní data pro trénování.
 
@@ -179,18 +180,38 @@ dostává jako vstup celý vstupní vektor z předchozí vrstvy (v případě pr
 vrstvy vstup od uživatele), a pro vstupní vektor o délce $k$ má $k + 1$
 parametrů (váhy pro každé $x_i$ a práh), a vstup pro n+1 vrstvu je vektor
 výstupů n-té vrstvy o délce $l$, kde $l$ je počet neuronů  n-té vrstvy. Tento
-druh sítí je pro účely rozpoznávání obrázků silně neefektivní. O tom jsme se přesvědčili tím, že jsme takovou síť zkusili sami natrénovat. Její architektura je na obrázku ____. I takto jednoduchá síť má obrovské množství parametrů - v našem případě 19278739. I přes velký počet parametrů však při trénování dosahovala velmi nedostatečných výsledků. Graf výsledků trénování je na obrázku ____. Při následném testování dosáhla přesnosti pouhých 0.5504, což je v praxi nepoužitelné.
+druh sítí je pro účely rozpoznávání obrázků silně neefektivní. O tom jsme se přesvědčili tím, že jsme takovou síť zkusili sami natrénovat. Její architektura je na obrázku ____. I takto jednoduchá síť má obrovské množství parametrů - v našem případě 19,278,739. I přes velký počet parametrů však při trénování dosahovala velmi nedostatečných výsledků. Graf výsledků trénování je na obrázku ____. Při následném testování dosáhla přesnosti pouhých 0.5504, což je v praxi nepoužitelné.
 ![architektura husté sítě](images/dense_architecture.png)
 ![graf trénování husté sítě](images/dense_without_added_data.png)
 
-### 2.1.5 Konvoluční neuronové sítě v teorii
+# 3 Konvoluční neuronové sítě
 
-Konvoluční neuronové sítě (CNN - Convoltional Neural Networks) jsou dalším, již pokročilejším druhem neuronových sítí. Využívají dvou operací - konvoluce a maxpoolingu. Konvoluční vrstva narozdíl od husté vrstvy využívá sdílených parametrů. 
+## 3.1 Konvoluční neuronové sítě v teorii
 
-# 3 Závěr
+Konvoluční neuronové sítě (CNN - Convolutional Neural Networks) jsou dalším, již pokročilejším druhem neuronových sítí. Tento druh sítí v minulosti vykazoval při rozpoznávání obrázků výrazně lepších výsledků než husté sítě. [^5] U konvolučních neuronových sítí se využívá dvou dalších operací oproti hustým sítím - konvoluce a poolingu. 
+
+### 3.1.1 Konvoluce
+
+Konvoluce je operace, při níž se na původní obrázek použijí tzv. jádra (kernely) konvoluce neboli filtry - matice o předem určených rozměrech, které jsou vždy přiloženy k části původního obrázku, a následně je spočítán skalární součet s danou oblastí obrázku (obr ____[^6]). Tato operace se nejprve aplikuje na levý horní roh obrázku, a dále se jádro posouvá nejprve doprava, a následně níže o tzv. krok (anglicky stride) - vektor dvou čísel (krok doprava a krok dolů), v našem případě (1, 1). Na výsledky konvoluce je použita aktivační funkce. Tato nově vzniklá hodnota je zapsána na příslušné místo do nové matice, která je vstupem následující vrstvy. U konvoluce dochází k ztrácení hodnot pixelů na okrajích obrázku, jelikož jsou při výpočtech využívány méněkrát než pixely dále od kraje. K vyřešení tohoto problému se využívá padding - operace, při které se přidají kolem okrajů obrázku nulové hodnoty tak, aby došlo ke snížení ztrát informací obsažených v okrajových pixelech.[^7]
+
+![Konvoluce](images/convolution.png)
+
+### 3.1.2 Pooling
+
+Další typ operace, jež se využívá u KNS je pooling. Tak jako u konvoluce se pooling aplikuje na každou část obrázku o specifikované velikosti. Pooling má za cíl dále redukovat komplexitu vstupu tím, že extrahuje z oblasti významné informace. Existuje například average pooling, který zprůměruje hodnoty oblasti, a tuto hodnotu zapíše do výsledného zmenšeného výstupu. Dále existuje max pooling, který narozdíl od average poolu vždy na výstup zapíše nejvyšší hodnotu oblasti. 
+
+# 4 Závěr
 
 # Zdroje
+
 [^1]: Understanding Transformer Neural Network Model in Deep Learning and NLP [online]. ©2023 [cit. 2023-12-16]. Dostupné z: https://www.turing.com/kb/brief-introduction-to-transformers-and-their-power
-[^10]: A Gentle Introduction to the Rectified Linear Unit (ReLU) [online]. 2020 [cit. 2023-12-15]. Dostupné z: https://machinelearningmastery.com/rectified-linear-activation-function-for-deep-learning-neural-networks/
-[^11]: Softmax Function Definition [online]. 2019 [cit. 2023-12-15]. Dostupné z: https://deepai.org/machine-learning-glossary-and-terms/softmax-layer
-[^12]:  Neuronové sítě - úvod [online]. [cit. 2023-12-16]. Dostupné z: http://ktiml.mff.cuni.cz/~pilat/cs/prirodou-inspirovane-algoritmy/neuronove-site-uvod/
+[^a]:  S. Srivastava, G. Sharma. OmniVec: Learning robust representations with cross modal sharing. 2023. 
+[^d]:  Kaggle [online]. www.kaggle.com [cit. 2023-12-17]. Dostupné z: www.kaggle.com
+[^b]: Katna [online]. https://katna.readthedocs.io [cit. 2023-12-17]. Dostupné z: https://katna.readthedocs.io
+[^c]: Pillow [online]. https://pillow.readthedocs.io [cit. 2023-12-17]. Dostupné z: https://pillow.readthedocs.io
+[^2]: A Gentle Introduction to the Rectified Linear Unit (ReLU) [online]. 2020 [cit. 2023-12-15]. Dostupné z: https://machinelearningmastery.com/rectified-linear-activation-function-for-deep-learning-neural-networks/
+[^3]: Softmax Function Definition [online]. 2019 [cit. 2023-12-15]. Dostupné z: https://deepai.org/machine-learning-glossary-and-terms/softmax-layer
+[^4]:  Neuronové sítě - úvod [online]. [cit. 2023-12-16]. Dostupné z: http://ktiml.mff.cuni.cz/~pilat/cs/prirodou-inspirovane-algoritmy/neuronove-site-uvod/
+[^5]: Y. LeCun, L. Bottou, Y. Bengio, P. Haffner. Gradient-based learning applied to document recognition. Proceedings of the IEEE, v. 86, pp. 2278-2324, 1998.
+[^6]: GOODFELLOW, Ian, Yoshua BENGIO a Aaron COURVILLE. The Convolution Operation. In: Deep Learning [online]. 2016 [cit. 2023-12-17]. Dostupné z: deeplearningbook.org
+[^7]: ZHANG, Aston, Zachary C. LIPTON,  Mu  LI,  a Alexander J. SMOLA. Dive into Deep Learning [online]. Cambridge University Press, 2023 [cit. 2023-12-17]. Dostupné z: https://d2l.ai/chapter_convolutional-neural-networks/padding-and-strides.html

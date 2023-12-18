@@ -15,7 +15,7 @@
 - [x] učení + back prop
 - [x] hustý sítě + proč hustý nefungujou (architektura, graf a výsledky trénování husté sítě)
 ### 6 konvoluční sítě
-- [ ] teoretickej úvod, konvoluce, maxpool, padding + stride
+- [x] teoretickej úvod, konvoluce, maxpool, padding + stride
 - [ ] alexnet a lenet (z nich vycházím)
 - [ ] architektura mojí konvolučky
 - [ ] oh no, našich datech to overfittuje! - jak jsem se snažil data zobecnit aby neoverfitovaly - naředíme datama z internetu

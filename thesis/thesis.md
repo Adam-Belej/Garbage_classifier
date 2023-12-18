@@ -63,17 +63,17 @@ od základů naprogramovat neuronové sítě včetně chybové funkce a učení,
 volbou je však některá z mnoha knihoven, které nabízí již optimalizované
 a uživatelsky přívětivější navrhování architektury, přípravu a manipulaci
 s daty, trénink a následnou evaluaci výsledků sítě. Mezi některé knihovny patří
-například [TensorFlow](https://www.tensorflow.org/),
-[PyTorch](https://pytorch.org/), [Caffe](http://caffe.berkeleyvision.org/)
+například TensorFlow[^q],
+PyTorch[^w] a Caffe[^e]
 v jazyce Python, v jazyce Java se dá použít knihovna
-[Deeplearning4j](https://deeplearning4j.konduit.ai/). Pro svou práci jsem
-zvolil knihovnu TensorFlow, jelikož je velice dobře zdokumentovaná, má širokou
+Deeplearning4j[^r]. Pro svou práci jsme
+zvolili knihovnu TensorFlow, jelikož je velice dobře zdokumentovaná, má širokou
 škálu možností trénování a navrhování neuronových sítí, a také umožňuje velmi
 jednoduše vizualizovat proces trénování a následnou úspěšnost.
 
 V dnešní době je již hluboké učení na vysoké úrovni. Aktuálně dosahují
 nejlepších výsledků nejen při rozpoznávání obrázků a zpracování přirozeného jazyka
-transformátory [^1]. O tomto svědčí i skutečnost, že v letošním roce dosáhl nejlepších výsledků pro rozpoznávání obrázků na datasetu ImageNet model OmniVec[^a], jež v jádru využívá právě transformátorů.  Jejichž použití je však v amatérském prostředí velmi výpočetně
+transformery [^1]. O tomto svědčí i skutečnost, že v letošním roce dosáhl nejlepších výsledků pro rozpoznávání obrázků na datasetu ImageNet model OmniVec[^a], jež v jádru využívá právě transformerů.  Jejichž použití je však v amatérském prostředí velmi výpočetně
 a časově náročné. Proto jsme se rozhodli použít primárně konvoluční neuronové
 sítě (CNN), které jsou výrazně méně výpočetně
 náročné, a které dosahují taktéž velmi kvalitních výsledků u rozpoznávání
@@ -84,7 +84,7 @@ obrázků.
 Vzhledem k tomu, že k natrénování neuronové sítě dosahující přijatelných
 výsledků je potřeba obrovské množství dat, bylo nutné vytvořit co možná
 největší dataset fotografií tříděného odpadu ve všech třech kategoriích. Jedna
-z možností byla pou69t již existující dataset z některého z dostupných
+z možností byla použít již existující dataset z některého z dostupných
 zdrojů (např. Kaggle[^d]), žádný z nich však nebyl
 v tak vysoké kvalitě, o jakou jsme se pokoušeli, obrázky byly často velmi nízkého rozlišení, jejich obsah výrazně rozmazaný nebo i pro lidské oko často špatně rozpoznatelný.
 Další možností bylo vytvořit dataset z obrázků nalezených na internetu, tahle
@@ -96,16 +96,16 @@ výsledné obrázky mají všechny stejnou velikost, rozměry a kvalitu. Všechn
 fotky byly foceny na pozadí, které bylo vytvořeno z papíru a grafitu, a které
 napodobuje pohybující se pás na třídící lince.
 
-![příklad neupraveného obrázku plastu z našeho datasetu](images/sample_plastic1.jpg)
-![příklad neupraveného obrázku papíru z našeho datasetu](images/sample_paper1.jpg)
-![příklad neupraveného obrázku skla z našeho datasetu](images/sample_glass1.jpg)
+![příklad neupraveného obrázku plastu z našeho datasetu](images/sample_plastic1.png)
+![příklad neupraveného obrázku papíru z našeho datasetu](images/sample_paper1.png)
+![příklad neupraveného obrázku skla z našeho datasetu](images/sample_glass1.png)
 
 ### 2.1.2 Zpracování a tvorba dat
 
 Bylo nutné sjednotit formát dat, aby bylo možné je použít jako vstup pro
 neuronovou síť. Zároveň jsme zvolili poměr stran 1:1, aby byla jednodušší
 následná augmentace. Jelikož se jedná o velký objem dat, bylo potřeba
-zautomatizovat celý proces přeformátování fotek na velikost 512x512 pixelů,
+zautomatizovat celý proces přeformátování fotek na velikost 224x224 pixelů,
 která by měla dostatečně zachovat objekty na fotkách, ale zároveň nebýt tak
 velká, aby velikost dat výrazně neztížila proces trénování sítí. K tomuto jsme
 nejprve použili knihovnu Katna[^b], která
@@ -121,10 +121,10 @@ Datová augmentace je technika, při které se původní dataset rozšíří tí
 mírně poupraví nebo pozmění původní data a následně se přidají k původním
 datům. 
 
-K augmentaci obrázků, které již byly v požadovaném formátu jsem použil opět
+K augmentaci obrázků, které již byly v požadovaném formátu jsme použili opět
 knihovnu Pillow[^c]. Všechny obrázky byly
 nejdříve horizontálně převráceny, a pak otočeny o 90, 180 a 270°. Tímto
-způsobem jsem efektivně zosminádobil vstupní data pro trénování.
+způsobem jsme efektivně zosminádobili vstupní data pro trénování.
 
 Celý proces od přeformátování až po augmentaci je zautomatizován v programu
 'dataset-creator.py', který je dostupný ve veřejném
@@ -179,6 +179,8 @@ Opačným jevem je podučení, které je dnes již vzhledem ke složitosti použ
 
 ### 2.1.4 Vyhodnocování úspěšnosti modelu
 
+
+
 ### 2.1.5 Husté neuronové sítě
 
 Husté neuronové sítě jsou jedním z nejjednodušších druhů sítí, kde každý neuron v dané vrstvě dostává jako vstup celý vstupní vektor z předchozí vrstvy (v případě první vrstvy vstup od uživatele), a pro vstupní vektor o délce $k$ má $k + 1$ parametrů (váhy pro každé $x_i$ a práh), a vstup pro n+1 vrstvu je vektor výstupů n-té vrstvy o délce $l$, kde $l$ je počet neuronů  n-té vrstvy. Tento druh sítí je pro účely rozpoznávání obrázků silně neefektivní. O tom jsme se přesvědčili tím, že jsme takovou síť zkusili sami natrénovat. Její architektura je na obrázku ____. I takto jednoduchá síť má obrovské množství parametrů - v našem případě 19,278,739. I přes velký počet parametrů však při trénování dosahovala velmi nedostatečných výsledků. Graf výsledků trénování je na obrázku ____. Při následném testování dosáhla přesnosti pouhých 0.5504, což je pro praktické využití velmi nedostatečný výsledek.
@@ -205,15 +207,26 @@ Další typ operace, jež se využívá u KNS je pooling. Tak jako u konvoluce s
 
 Prvním krokem k vytvoření co možná nejlepšího modelu bylo potřeba nejprve navrhnout architekturu naší sítě. Při návrhu této architektury jsme vycházeli z AlexNetu[^x], částečně jsme se také inspirovali o něco starším a jednodušším LeNetem[^5]. Jako výchozí model jsme nakonec zvolili model na obrázku ____. 
 
+![Výchozí architektura naší konvoluční neuronové sítě](images/convolutional_architecture.png)
+
+Při tréninku o 40 epochách se nám povedlo dosáhnout testovací úspěšnosti 0.9321. Tento výsledek se zdál být velmi dobrý, ale přesto jsme chtěli zjistit, jak dobře tento model reaguje na data, která již nejsou na stejném pozadí, a 
+
 # 4 Závěr
+
+# Webové odkazy
+(ty pak ideálně dostat pod čáru na každé stránce, na které se na ně odkazuje)
+[^d]: Kaggle [online]. www.kaggle.com [cit. 2023-12-17]. Dostupné z: www.kaggle.com
+[^b]: Katna [online]. https://katna.readthedocs.io [cit. 2023-12-17]. Dostupné z: https://katna.readthedocs.io
+[^c]: Pillow [online]. https://pillow.readthedocs.io [cit. 2023-12-17]. Dostupné z: https://pillow.readthedocs.io
+[^q]: https://www.tensorflow.org/
+[^w]:https://pytorch.org/
+[^e]: http://caffe.berkeleyvision.org/
+[^r]: https://deeplearning4j.konduit.ai/
 
 # Zdroje
 
 [^1]: Understanding Transformer Neural Network Model in Deep Learning and NLP [online]. ©2023 [cit. 2023-12-16]. Dostupné z: https://www.turing.com/kb/brief-introduction-to-transformers-and-their-power
-[^a]:  S. Srivastava, G. Sharma. OmniVec: Learning robust representations with cross modal sharing. 2023. 
-[^d]:  Kaggle [online]. www.kaggle.com [cit. 2023-12-17]. Dostupné z: www.kaggle.com
-[^b]: Katna [online]. https://katna.readthedocs.io [cit. 2023-12-17]. Dostupné z: https://katna.readthedocs.io
-[^c]: Pillow [online]. https://pillow.readthedocs.io [cit. 2023-12-17]. Dostupné z: https://pillow.readthedocs.io
+[^a]:  S. Srivastava, G. Sharma. Attention is all you need. 2017. 
 [^2]: A Gentle Introduction to the Rectified Linear Unit (ReLU) [online]. 2020 [cit. 2023-12-15]. Dostupné z: https://machinelearningmastery.com/rectified-linear-activation-function-for-deep-learning-neural-networks/
 [^3]: Softmax Function Definition [online]. 2019 [cit. 2023-12-15]. Dostupné z: https://deepai.org/machine-learning-glossary-and-terms/softmax-layer
 [^12]:  Neuronové sítě - úvod [online]. [cit. 2023-12-16]. Dostupné z: http://ktiml.mff.cuni.cz/~pilat/cs/prirodou-inspirovane-algoritmy/neuronove-site-uvod/

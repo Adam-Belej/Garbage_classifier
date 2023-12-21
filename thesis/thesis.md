@@ -230,9 +230,9 @@ Dvě tabulky níže ukazují výsledky jednotlivých modelů, jedna na našich d
 |19Konvoluční|6x konvoluce, 6x maxpool, 3x plně propojená|128|30|0.001|Ano, při první konvoluci|0.8953|0.8232||
 |20Konvoluční|6x konvoluce, 6x maxpool, 3x plně propojená|128|30|0.0001|Ano, při první konvoluci|0.9822|0.8185||
 |21Konvoluční|6x konvoluce, 6x maxpool, 3x plně propojená|128|60|0.0001|Ano, při první konvoluci|0.9043|0.8293||
-|22Konvoluční|6x konvoluce, 5x maxpool, 3x plně propojená|128|60|0.0001|Ano, při první konvoluci|**0.9916**|0.8093||
-|23Konvoluční|6x konvoluce, 5x maxpool, 3x plně propojená|256|25|0.0001|Ano, při první konvoluci|0.8604|0.8097||
-|24Konvoluční|6x konvoluce, 5x maxpool, 3x plně propojená|256|40|0.0001|Ano, při první konvoluci|0.9452|0.8168||
+|22Konvoluční|6x konvoluce, 5x maxpool, 3x plně propojená|128|60|0.0001|Ano, při první konvoluci|**0.9916**|0.8093|Zdvojená třetí konvoluce|
+|23Konvoluční|6x konvoluce, 5x maxpool, 3x plně propojená|256|25|0.0001|Ano, při první konvoluci|0.8604|0.8097|Zdvojená třetí konvoluce|
+|24Konvoluční|6x konvoluce, 5x maxpool, 3x plně propojená|256|40|0.0001|Ano, při první konvoluci|0.9452|0.8168|Zdvojená třetí konvoluce|
 |30Konvoluční|5x konvoluce, 5x maxpool, 3x plně propojená|512|60|0.0002|Ne|0.9855|0.8405||
 
 # 4 Závěr

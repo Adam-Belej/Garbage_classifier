@@ -178,7 +178,7 @@ Po natrénování modelu na tréninkových datech je naším cílem zjistit jak 
 
 ### 2.2.5 Husté neuronové sítě
 
-Husté neuronové sítě jsou jedním z nejjednodušších druhů sítí, kde každý neuron v dané vrstvě dostává jako vstup celý vstupní vektor z předchozí vrstvy (v případě první vrstvy vstup od uživatele), a pro vstupní vektor o délce $k$ má $k + 1$ parametrů (váhy pro každé $x_i$ a práh), a vstup pro n+1 vrstvu je vektor výstupů n-té vrstvy o délce $l$, kde $l$ je počet neuronů  n-té vrstvy. Tento druh sítí je pro účely rozpoznávání obrázků silně neefektivní. O tom jsme se přesvědčili tím, že jsme takovou síť zkusili sami natrénovat. Její architektura je na obrázku ____. I takto jednoduchá síť má obrovské množství parametrů - v našem případě 19,278,739. I přes velký počet parametrů však při trénování dosahovala velmi nedostatečných výsledků. Graf výsledků trénování je na obrázku ____. Při následném testování dosáhla přesnosti pouhých 0.5504, což je pro praktické využití velmi nedostatečný výsledek.
+Husté neuronové sítě jsou jedním z nejjednodušších druhů sítí, kde každý neuron v dané vrstvě dostává jako vstup celý vstupní vektor z předchozí vrstvy (v případě první vrstvy vstup od uživatele), a pro vstupní vektor o délce $k$ má $k + 1$ parametrů (váhy pro každé $x_i$ a práh), a vstup pro n+1 vrstvu je vektor výstupů n-té vrstvy o délce $l$, kde $l$ je počet neuronů  n-té vrstvy. Tento druh sítí je pro účely rozpoznávání obrázků silně neefektivní. O tom jsme se přesvědčili tím, že jsme takovou síť zkusili sami natrénovat. Její architektura je na obrázku 3. I takto jednoduchá síť má obrovské množství parametrů - v našem případě 19,278,739. I přes velký počet parametrů však při trénování dosahovala velmi nedostatečných výsledků. Graf výsledků trénování je na obrázku 4. Při následném testování dosáhla přesnosti pouhých 0.5504, což je pro praktické využití velmi nedostatečný výsledek.
 ![Obrázek 3: Návrh architektury naší husté neuronové sítě](images/dense_architecture.png)
 ![Obrázek 4: Graf průběhu trénování naší husté sítě](images/dense_without_added_data.png)
 
@@ -204,7 +204,36 @@ Prvním krokem k vytvoření co možná nejlepšího modelu bylo potřeba nejprv
 
 ![Obrázek 6: Výchozí architektura naší konvoluční neuronové sítě](images/convolutional_architecture.png)
 
-Při učení o 40 epochách se nám povedlo dosáhnout testovací úspěšnosti 0.9321 na testovacím vzorku 4359 obrázků. Tento výsledek se zdál být velmi dobrý, ale přesto jsme chtěli zjistit, jak dobře tento model reaguje na data, která již nejsou na stejném pozadí, a proto jsme se rozhodli otestovat model na datech volně dostupných na platformě Kaggle. Na těchto datech již náš model dosahoval výrazně horších výsledků - úspěšnost klasifikace na vzorku 15840 dat byla 0.6355. Přestože tento model by byl v praxi při zachování podmínek (stejné pozadí) a dalším učení na rozsáhlejším datasetu pravděpodobně použitelný, rozhodli jsme se učit model na výrazně větším množství dat. Tato data jsme získali spojením námi vytvořeného datasetu a dalšími volně dostupnými datasety z platformy Kaggle. Tímto způsobem jsme téměř ztrojnásobili původní množinu dat, a nový dataset byl výrazně obecnější - obsahoval obrázky na rozličných pozadích, v odlišných světelných podmínkách a také na ještě větším vzorku odpadků, jež se mohou v třech klasifikovaných kategoriích objevit. 
+Při učení o 40 epochách se nám povedlo dosáhnout testovací úspěšnosti 0.9321 na testovacím vzorku 4359 obrázků. Tento výsledek se zdál být velmi dobrý, ale přesto jsme chtěli zjistit, jak dobře tento model reaguje na data, která již nejsou na stejném pozadí, a proto jsme se rozhodli otestovat model na datech volně dostupných na platformě Kaggle. Na těchto datech již náš model dosahoval výrazně horších výsledků - úspěšnost klasifikace na vzorku 15840 dat byla 0.6355. Přestože tento model by byl v praxi při zachování podmínek (stejné pozadí) a dalším učení na rozsáhlejším datasetu pravděpodobně použitelný, rozhodli jsme se učit model na výrazně větším množství dat, abychom jej zobecnili. Tato data jsme získali spojením námi vytvořeného datasetu a dalšími volně dostupnými datasety z platformy Kaggle. Tímto způsobem jsme téměř ztrojnásobili původní množinu dat, a nový dataset byl výrazně obecnější - obsahoval obrázky na rozličných pozadích, v odlišných světelných podmínkách a také na ještě větším vzorku odpadků, jež se mohou v třech klasifikovaných kategoriích objevit. 
+
+Dále jsme pokračovali v učení, pro každé nové učení jsme mírně poupravili některé parametry trénování - počet vrstev, počet epoch, batch size, parametr učení nebo přidali padding.
+Dvě tabulky níže ukazují výsledky jednotlivých modelů, jedna na našich datech, druhá na rozšířeném datasetu.
+
+| Typ sítě | Vrstev | Batch size | Epoch | Parametr učení $\alpha$ | Padding | Tréninková úspěšnost | Testovací úspěšnost | Poznámka |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | --- |
+|Hustá|6x plně propojená|128|30|0.001|Ne|0.5516|0.5504||
+|13Konvoluční|5x konvoluce, 5x  maxpool, 3x plně propojená|128|40|0.001|Ne|0.9960|**0.9321**||
+|25Konvoluční|6x konvoluce, 5x  maxpool, 3x plně propojená|256|40|0.0001|Ano, při první konvoluci|0.9404|0.8575|Zdvojená třetí konvoluce|
+|26Konvoluční|6x konvoluce, 5x  maxpool, 3x plně propojená|256|40|0.0001|Ne|0.9327|0.8674|Zdvojená třetí konvoluce|
+|27Konvoluční|6x konvoluce, 5x  maxpool, 3x plně propojená|256|60|0.0001|Ne|0.9643|0.8520|Zdvojená třetí konvoluce|
+|28Konvoluční|5x konvoluce, 5x  maxpool, 3x plně propojená|256|60|0.0001|Ne|0.9637|0.8724||
+|29Konvoluční|5x konvoluce, 5x  maxpool, 3x plně propojená|256|60|0.0002|Ne|**1.000**|0.9007||
+|31Konvoluční|5x konvoluce, 5x  maxpool, 3x plně propojená|512|60|0.0002|Ne|0.9520|0.8919||
+
+
+| Typ sítě | Vrstev | Batch size | Epoch | Parametr učení $\alpha$ | Padding | Tréninková úspěšnost | Testovací úspěšnost | Poznámka |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | --- |
+|Hustá|6x plně propojená|128|30|0.001|Ne|0.3277|0.3318||
+|15Konvoluční|5x konvoluce, 5x maxpool, 3x plně propojená|128|40|0.001|Ne|0.9914|**0.8483**||
+|17Konvoluční|5x konvoluce, 5x maxpool, 4x plně propojená|128|40|0.001|Ano, při první konvoluci|0.9034|0.8314||
+|18Konvoluční|5x konvoluce, 5x maxpool, 4x plně propojená|128|30|0.001|Ano, při první konvoluci|0.9895|0.8305||
+|19Konvoluční|6x konvoluce, 6x maxpool, 3x plně propojená|128|30|0.001|Ano, při první konvoluci|0.8953|0.8232||
+|20Konvoluční|6x konvoluce, 6x maxpool, 3x plně propojená|128|30|0.0001|Ano, při první konvoluci|0.9822|0.8185||
+|21Konvoluční|6x konvoluce, 6x maxpool, 3x plně propojená|128|60|0.0001|Ano, při první konvoluci|0.9043|0.8293||
+|22Konvoluční|6x konvoluce, 5x maxpool, 3x plně propojená|128|60|0.0001|Ano, při první konvoluci|**0.9916**|0.8093||
+|23Konvoluční|6x konvoluce, 5x maxpool, 3x plně propojená|256|25|0.0001|Ano, při první konvoluci|0.8604|0.8097||
+|24Konvoluční|6x konvoluce, 5x maxpool, 3x plně propojená|256|40|0.0001|Ano, při první konvoluci|0.9452|0.8168||
+|30Konvoluční|5x konvoluce, 5x maxpool, 3x plně propojená|512|60|0.0002|Ne|0.9855|0.8405||
 
 # 4 Závěr
 

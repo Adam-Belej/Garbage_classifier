@@ -22,22 +22,25 @@ o právu autorském, o právech souvisejících s právem autorským a o změně
 Ve Šternberku dne  ………………………………………………
 Adam Belej
 
-
 **Poděkování**
 
 ***
 
 **Anotace**
 
+Práce popisuje vývoj modelu konvoluční neuronové sítě, jež má za cíl rozpoznávat z obrázků tříděný odpad ve třech kategoriích. Nejdříve je zdokumentován postupně počáteční sběr dat, a jsou zjednodušeně zadefinovány základní teoretické koncepty na kterých konvoluční neuronové sítě staví. Dále pak popisujeme, jak jsme se snažili vyvinout co nejefektivnější model a proces tréninku několika modelů a jejich úspěšnost.
+
 **Klíčová slova**
 
-Neuronové sítě, Rozpoznávání obrázků, Počítačové vidění
+Konvoluční neuronové sítě, strojové učení, rozpoznávání obrázků, počítačové vidění, umělá inteligence
 
 **Annotation**
 
+The thesis describes the development of a convolutional neural network, whose aim is to recognize sorted waste in three categories from images. Firstly, it documents the inital data collection and defines the basic theoretical concepts, on which convolutional neural networks are based. Then we describe how we tried to develop an effective model and the process of training several models and their success rates.
+
 **Keywords**
 
-Neural networks, Image recognition, Computer vision
+Concolutional neural networks, machine learning, image recognition, computer vision, artificial intelligence
 
 ***
 
@@ -62,24 +65,20 @@ od základů naprogramovat neuronové sítě včetně chybové funkce a učení,
 volbou je však některá z mnoha knihoven, které nabízí již optimalizované
 a uživatelsky přívětivější navrhování architektury, přípravu a manipulaci
 s daty, trénink a následnou evaluaci výsledků sítě. Mezi některé knihovny patří
-například TensorFlow[^103], PyTorch[^104] a Caffe[^105] v jazyce Python, v jazyce Java se dá použít knihovna Deeplearning4j[^106]. Pro svou práci jsme zvolili knihovnu TensorFlow, jelikož je velice dobře zdokumentovaná, má širokou škálu možností trénování a navrhování neuronových sítí, a také umožňuje velmi jednoduše vizualizovat proces trénování a následnou úspěšnost.
+například TensorFlow[^103], PyTorch[^104] a Caffe[^105] v jazyce Python, v jazyce Java se dá použít knihovna Deeplearning4j[^106]. Pro svou práci jsme zvolili knihovnu TensorFlow, jelikož je velice dobře zdokumentovaná, má širokou škálu možností trénování a navrhování neuronových sítí, a také umožňuje velmi jednoduše vizualizovat proces trénování a úspěšnost. Také se již natrénované modely dají jednoduše exportovat a následně použít na mobilních zařízeních bez nutnosti tak vysoké výpočetní kapacity, jaká je potřeba k trénování daných sítí.
 
-V dnešní době je již hluboké učení na vysoké úrovni. Aktuálně dosahují
-nejlepších výsledků nejen při rozpoznávání obrázků a zpracování přirozeného jazyka
-transformery[^1]. O tomto svědčí i skutečnost, že v letošním roce dosáhl nejlepších výsledků pro rozpoznávání obrázků na datasetu ImageNet model OmniVec[^a], jež v jádru využívá právě transformerů.  Jejichž použití je však v amatérském prostředí velmi výpočetně
-a časově náročné. Proto jsme se rozhodli použít primárně konvoluční neuronové
-sítě (CNN), které jsou výrazně méně výpočetně
-náročné, a které dosahují taktéž velmi kvalitních výsledků u rozpoznávání
+V dnešní době je již hluboké učení na vysoké úrovni. Aktuálně nejlepších výsledků nejen při rozpoznávání obrázků a zpracování přirozeného jazyka dosahují  transformery[^1]. O tomto svědčí i skutečnost, že v letošním roce dosáhl nejlepších výsledků pro rozpoznávání obrázků na datasetu ImageNet model OmniVec[^a], jež v jádru využívá právě transformerů.  Jejichž použití je však v amatérském prostředí velmi výpočetně
+a časově náročné. Proto jsme se rozhodli použít primárně konvoluční neuronové sítě (CNN), které jsou výrazně méně výpočetně náročné, a které dosahují taktéž velmi kvalitních výsledků u rozpoznávání
 obrázků.
 
 ## 2.1 Vstupní data
 
 Vzhledem k tomu, že k natrénování neuronové sítě dosahující přijatelných
 výsledků je potřeba obrovské množství dat, bylo nutné vytvořit co možná
-největší dataset fotografií tříděného odpadu ve všech třech kategoriích. Jedna
+největší dataset fotografií tříděného odpadu ve všech třech kategoriích (papír, plast a sklo). Jedna
 z možností byla použít již existující dataset z některého z dostupných
 zdrojů (např. Kaggle[^100]), žádný z nich však nebyl
-v tak vysoké kvalitě, o jakou jsme se pokoušeli, obrázky byly často velmi nízkého rozlišení, jejich obsah výrazně rozmazaný nebo i pro lidské oko často špatně rozpoznatelný.
+v tak vysoké kvalitě, o jakou jsme se pokoušeli, obrázky byly často velmi nízkého rozlišení, jejich obsah výrazně rozmazaný nebo i pro lidské oko často špatně rozpoznatelný a odpadky byly často pořizovány z velice rozdílých úhlů a vzdáleností.
 Další možností bylo vytvořit dataset z obrázků nalezených na internetu, tahle
 možnost však měla opět nevýhodu rozdílné kvality a navíc byla oproti
 první možnosti časově náročnější s nepatrným zlepšením kvality výsledného
@@ -98,7 +97,7 @@ napodobuje pohybující se pás na třídící lince.
 Bylo nutné sjednotit formát dat, aby bylo možné je použít jako vstup pro
 neuronovou síť. Zároveň jsme zvolili poměr stran 1:1, aby byla jednodušší
 následná augmentace. Jelikož se jedná o velký objem dat, bylo potřeba
-zautomatizovat celý proces přeformátování fotek na velikost 224x224 pixelů,
+zautomatizovat celý proces přeformátování fotek na velikost 224x224 pixelů - tato velikost bývá často používána při rozpoznávání obrázků, pracuje s ní například AlexNet[^x] -
 která by měla dostatečně zachovat objekty na fotkách, ale zároveň nebýt tak
 velká, aby velikost dat výrazně neztížila proces trénování sítí. K tomuto jsme
 nejprve použili knihovnu Katna[^101], která
@@ -142,8 +141,8 @@ Program byl vytvořen tak, aby byl co nejvíce generalizován, a díky tomu je d
 
 Neuron je základní jednotkou počítačových neuronových sítí, a jeho jádrem je
 algoritmus, který pro matici vstupních dat $x$ o délce $k$ spočítá skalární
-součin s vektorem váh (weights) $w$ a přičte k nim práh (bias) $b$, a následně
-na toto číslo použije aktivační funkci $g$. Aktivační funkce má za cíl nelineárně transformovat výstup neuronu. Vzorcem lze tento proces vyjářit takto:
+součin s vektorem vah (weights) $w$ a přičte k nim práh (bias) $b$, a následně
+na tuto hodnotu aplikuje aktivační funkci $g$. Aktivační funkce má za cíl nelineárně transformovat výstup neuronu, bez ní by bylo kontraproduktivní používat více neruronů, jelikož by se jednalo stále o tu samou lineární funkci. Vzorcem lze tento proces vyjářit takto:
 $f(x) = \sum_{i=1}^k w_i  x_i + b$ Mezi nejčastěji používané aktivační
 funkce patří:
 
@@ -166,19 +165,19 @@ do více kategorií tolik neuronů, kolik je kategorií.
 
 ### 2.2.3 Učení neuronové sítě
 
-Pro učení neuronových sítí se používá algoritmus zpětného šíření chyby (anglicky error back propagation). Tento algoritmus pro každý trénovací vstup zjistí chybu - odchylku od správného výsledku metodou MSE (Mean Squared Error - Střední kvadratická chyba), kde odečte výstup daného neuronu od požadovaného správného výstupu, a tento rozdíl umocní. Následně pomocí parciální derivace zjistí podíl dané váhy neuronu na této chybě, a od této váhy odečte součin této parciální derivace s $\alpha$, kde $\alpha$ je parametr učení. [^12] Tuto operaci provádíme postupně od výstupní vrstvy až po vstupní vrstvu. Takto se projde každý tréninkový vstup. Proces, při kterém model jednou projde celý tréninkový dataset se nazývá epocha.
+Pro učení neuronových sítí se používá algoritmus zpětného šíření chyby (anglicky error back propagation). Tento algoritmus pro každý trénovací vstup zjistí chybu - odchylku od správného výsledku metodou MSE (Mean Squared Error - Střední kvadratická chyba), kde odečte výstup daného neuronu od požadovaného správného výstupu, a tento rozdíl umocní. Následně pomocí parciální derivace zjistí, jak velký podíl má tento neuron na chybném výstupu, a od této váhy odečte součin této parciální derivace s $\alpha$[^12], kde $\alpha$ je parametr učení.  Tuto operaci provádíme postupně od výstupní vrstvy až po vstupní vrstvu. Takto se projde každý tréninkový vstup. Proces, při kterém model jednou projde celý tréninkový dataset se nazývá epocha.
 
-Při učení jednotlivých modelů je možné se poměrně často setkat s fenoménem přeučení[^h], kdy se model příliš přizpůsobí datům, na kterých jej učíme - například se místo rozpoznávání objektů na obrázku naučí rozpoznávat nepatrný šum v pozadí jednotlivých obrázků. Pro tato data pak vykazuje velmi vysokou úspěšnost klasifikace, na nových - pro model neznámých datech však dosahuje výrazně horších výsledků. Mezi některé možné příčiny tohoto problému patří nedostatek tréninkových dat, přílišný šum obrázků a přílišná složitost modelu. Typicky se dá tento problém vyřešit navýšením objemu tréninkových dat nebo mírným zjednodušením modelu odebráním některé z vrstev. snížením počtu neuronů v některých vrstvách nebo zastavení učení po nižším počtu epoch.
+Při učení jednotlivých modelů je možné se poměrně často setkat s fenoménem přeučení[^h], kdy se model příliš přizpůsobí datům, na kterých jej učíme - například se místo rozpoznávání objektů na obrázku naučí rozpoznávat nepatrný šum v pozadí jednotlivých obrázků. Pro tato data pak vykazuje velmi vysokou úspěšnost klasifikace, na nových - pro model neznámých - datech však dosahuje výrazně horších výsledků. Mezi některé možné příčiny tohoto problému patří nedostatek tréninkových dat, přílišný šum obrázků a přílišná kapacita modelu. Typicky se dá tento problém vyřešit navýšením objemu tréninkových dat nebo mírným zjednodušením modelu odebráním některé z vrstev. snížením počtu neuronů v některých vrstvách nebo zastavení učení po nižším počtu epoch.
 
 Opačným jevem je podučení, které je dnes již vzhledem ke složitosti používaných modelů méně častým jevem, ale stále je možné se s ním setkat. Tento jev bývá nejčastěji způsoben přílišnou jednoduchostí modelu, a tak zpravidla bývá řešením navýšení kapacity modelu.
 
 ### 2.2.4 Vyhodnocování úspěšnosti modelu
 
-Po natrénování modelu na tréninkových datech je naším cílem zjistit jak dobře model funguje. To můžeme zjistit tak, že jej necháme klasifikovat data, a spočítáme, v kolika procentech případů zařadí model vstupy správně. Mohli bychom zjistit, v kolika procemtech správně zařadí tréninková data, ale v takovém případě by výsledek byl jednak zavádějící, jelikož jsou to právě data, na kterých se učil, a tak s vysokou pravděpodobností bude mít při dobře navržené architektuře sítě velmi dobrou úspěšnost na těchto datech. Většinou je však cílem trénování modelu naučit jej rozpoznávat nová - pro model neznámá data. Proto původní dataset rozdělíme, a 90% dat použijeme na učení, a zbylých 10% necháme na pozdější otestování úspěšnosti rozpoznávání nových dat.
+Po natrénování modelu na tréninkových datech je naším cílem zjistit jak dobře model funguje. To můžeme zjistit tak, že jej necháme klasifikovat data, a spočítáme, v kolika procentech případů zařadí model vstupy správně. Mohli bychom zjistit, v kolika procentech správně zařadí tréninková data, ale v takovém případě by výsledek byl jednak zavádějící, jelikož jsou to právě data, na kterých se učil, a tak s vysokou pravděpodobností bude mít při dobře navržené architektuře sítě velmi dobrou úspěšnost na těchto datech. Většinou je však cílem trénování modelu naučit jej rozpoznávat nová - pro model neznámá data. Proto původní dataset rozdělíme, a 90% dat použijeme na učení, a zbylých 10% necháme na pozdější otestování úspěšnosti rozpoznávání nových dat.
 
 ### 2.2.5 Husté neuronové sítě
 
-Husté neuronové sítě jsou jedním z nejjednodušších druhů sítí, kde každý neuron v dané vrstvě dostává jako vstup celý vstupní vektor z předchozí vrstvy (v případě první vrstvy vstup od uživatele), a pro vstupní vektor o délce $k$ má $k + 1$ parametrů (váhy pro každé $x_i$ a práh), a vstup pro n+1 vrstvu je vektor výstupů n-té vrstvy o délce $l$, kde $l$ je počet neuronů  n-té vrstvy. Tento druh sítí je pro účely rozpoznávání obrázků silně neefektivní. O tom jsme se přesvědčili tím, že jsme takovou síť zkusili sami natrénovat. Její architektura je na obrázku 3. I takto jednoduchá síť má obrovské množství parametrů - v našem případě 19,278,739. I přes velký počet parametrů však při trénování dosahovala velmi nedostatečných výsledků. Graf výsledků trénování je na obrázku 4. Při následném testování dosáhla přesnosti pouhých 0.5504, což je pro praktické využití velmi nedostatečný výsledek.
+Husté neuronové sítě jsou jedním z nejjednodušších druhů sítí, kde každý neuron v dané vrstvě dostává jako vstup celý vstupní vektor z předchozí vrstvy (v případě první vrstvy vstup od uživatele), a pro vstupní vektor o délce $k$ má $k + 1$ parametrů (váhy pro každé $x_i$ a práh), a vstup pro n+1 vrstvu je vektor výstupů n-té vrstvy o délce $l$, kde $l$ je počet neuronů  n-té vrstvy. Tento druh sítí však nemá pro účely rozpoznávání obrázků požadovanou přesnost. O tom jsme se přesvědčili tím, že jsme takovou síť zkusili sami natrénovat. Její architektura je na obrázku 3. I takto jednoduchá síť má obrovské množství parametrů - v našem případě téměř 20 milionů. I přes velký počet parametrů však při trénování dosahovala velmi nedostatečných výsledků. Graf výsledků trénování je na obrázku 4. Při následném testování dosáhla přesnosti pouhých 0.5504, což je pro praktické využití velmi nedostatečný výsledek.
 ![Obrázek 3: Návrh architektury naší husté neuronové sítě](images/dense_architecture.png)
 ![Obrázek 4: Graf průběhu trénování naší husté sítě](images/dense_without_added_data.png)
 

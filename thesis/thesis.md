@@ -40,7 +40,7 @@ The thesis describes the development of a convolutional neural network, whose ai
 
 **Keywords**
 
-Concolutional neural networks, machine learning, image recognition, computer vision, artificial intelligence
+Convolutional neural networks, machine learning, image recognition, computer vision, artificial intelligence
 
 ***
 
@@ -50,7 +50,8 @@ Obsah
 
 # 1 Úvod
 
-
+V dnešní době se čím dál častěji ve veřejném prostoru objevují slovní spojení "Umělá inteligence" a "Strojové učení", a také začínají být velmi rozšířené modely jako například ChatGPT[^v] pro generování textu či Leonardo[^y] pro generování obrázků podle textového řetězce, které stavějí právě na konceptech strojového učení. Tyto modely jsou velmi složité, a proto se nebudeme věnovat přímo jim, ale prvním cílem práce je seznámit alespoň intuitivně čtenáře se základními koncepty neuronových sítí, které jsou důležitou součástí strojového učení, specifičtěji se pak věnujeme využití konvolučních neuronových sítí pro rozpoznávání a klasifikaci obrázků (Počítačové vidění - Computer vision). 
+Dalším cílem práce je demonstrovat tyto koncepty prakticky, a to vytvořenmím a natrénováním modelu, který bude schopen s co největší úspěšností klasifikovat obrázky do tří kategorií - plast, papír a sklo. Celý proces je popsán od počátečního sběru dat k natrénování modelu až po vyhodnocování úspěšnosti a pokusů o zlepšení úspěšnosti testováním různých parametrů učení a architektur. Motivací pro výběr právě rozpoznávání tříděného odpadu byla zodpovědnost k životnímu prostředí, kde by zautomatizování a implementování procesu rozřazování na třídících linkách odpadohospodářských společností mohlo zvýšit množství odpadu, který bude zrecyklován, a naopak snížit množství odpadu, který je poslán do spaloven i přes to, že je stále recyklovatelný.
 
 # 2 Neuronové sítě
 
@@ -254,6 +255,9 @@ Dvě tabulky níže ukazují výsledky jednotlivých modelů, jedna na našich d
 # Webové odkazy
 (ty pak ideálně dostat pod čáru na každé stránce, na které se na ně odkazuje)
 
+
+[^v]: ChatGPT: https://chat.openai.com/
+[^y]: Leonardo: https://leonardo.ai/
 [^100]: Kaggle: www.kaggle.com
 [^101]: Katna: https://katna.readthedocs.io
 [^102]: Pillow: https://pillow.readthedocs.io

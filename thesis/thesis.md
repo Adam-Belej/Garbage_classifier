@@ -51,7 +51,10 @@ Obsah
 # 1 Úvod
 
 V dnešní době se čím dál častěji ve veřejném prostoru objevují slovní spojení "Umělá inteligence" a "Strojové učení", a také začínají být velmi rozšířené modely jako například ChatGPT[^v] pro generování textu či Leonardo[^y] pro generování obrázků podle textového řetězce, které stavějí právě na konceptech strojového učení. Tyto modely jsou velmi složité, a proto se nebudeme věnovat přímo jim, ale prvním cílem práce je seznámit alespoň intuitivně čtenáře se základními koncepty neuronových sítí, které jsou důležitou součástí strojového učení, specifičtěji se pak věnujeme využití konvolučních neuronových sítí pro rozpoznávání a klasifikaci obrázků (Počítačové vidění - Computer vision). 
-Dalším cílem práce je demonstrovat tyto koncepty prakticky, a to vytvořenmím a natrénováním modelu, který bude schopen s co největší úspěšností klasifikovat obrázky do tří kategorií - plast, papír a sklo. Celý proces je popsán od počátečního sběru dat k natrénování modelu až po vyhodnocování úspěšnosti a pokusů o zlepšení úspěšnosti testováním různých parametrů učení a architektur. Motivací pro výběr právě rozpoznávání tříděného odpadu byla zodpovědnost k životnímu prostředí, kde by zautomatizování a implementování procesu rozřazování na třídících linkách odpadohospodářských společností mohlo zvýšit množství odpadu, který bude zrecyklován, a naopak snížit množství odpadu, který je poslán do spaloven i přes to, že je stále recyklovatelný.
+Dalším cílem práce je demonstrovat tyto koncepty prakticky, a to vytvořením a natrénováním modelu, který bude schopen s co největší úspěšností klasifikovat obrázky do tří kategorií - plast, papír a sklo. Celý proces je popsán od počátečního sběru dat a vytvoření datasetu s jednotnými parametry přes trénování modelu až po vyhodnocování úspěšnosti a pokusů o zlepšení úspěšnosti testováním různých parametrů učení a architektur. Motivací pro výběr právě rozpoznávání tříděného odpadu byla zodpovědnost k životnímu prostředí, kde by zautomatizování a implementování procesu rozřazování na třídících linkách odpadohospodářských společností mohlo zvýšit množství odpadu, který bude zrecyklován, a naopak snížit množství odpadu, který je poslán do spaloven i přes to, že je stále recyklovatelný.
+
+[^v]: ChatGPT: https://chat.openai.com/
+[^y]: Leonardo: https://leonardo.ai/
 
 # 2 Neuronové sítě
 
@@ -71,6 +74,11 @@ například TensorFlow[^103], PyTorch[^104] a Caffe[^105] v jazyce Python, v jaz
 V dnešní době je již hluboké učení na vysoké úrovni. Aktuálně nejlepších výsledků nejen při rozpoznávání obrázků a zpracování přirozeného jazyka dosahují  transformery[^1]. O tomto svědčí i skutečnost, že v letošním roce dosáhl nejlepších výsledků pro rozpoznávání obrázků na datasetu ImageNet model OmniVec[^a], jež v jádru využívá právě transformerů.  Jejichž použití je však v amatérském prostředí velmi výpočetně
 a časově náročné. Proto jsme se rozhodli použít primárně konvoluční neuronové sítě (CNN), které jsou výrazně méně výpočetně náročné, a které dosahují taktéž velmi kvalitních výsledků u rozpoznávání
 obrázků.
+
+[^103]: TensorFlow: https://www.tensorflow.org/
+[^104]: PyTorch: https://pytorch.org/
+[^105]: Caffe: http://caffe.berkeleyvision.org/
+[^106]: Deeplearning4j: https://deeplearning4j.konduit.ai/
 
 ## 2.1 Vstupní data
 
@@ -93,6 +101,8 @@ napodobuje pohybující se pás na třídící lince.
 ![Obrázek 1.2: Příklad neupraveného obrázku papíru z našeho datasetu](images/sample_paper1.png)
 ![Obrázek 1.3: Příklad neupraveného obrázku skla z našeho datasetu](images/sample_glass1.png)
 
+[^100]: Kaggle: www.kaggle.com
+
 ### 2.1.1 Zpracování a tvorba dat
 
 Bylo nutné sjednotit formát dat, aby bylo možné je použít jako vstup pro
@@ -107,6 +117,9 @@ ořezávání došlo k co možná nejmenší ztrátě dat. S její pomocí jsme 
 přeformátovali na poměr stran 1:1. Dále jsme využili knihovny
 Pillow[^102] ke konverzi do formátu png
 a zmenšení obrázků na jednotný formát 224x224 pixelů.
+
+[^101]: Katna: https://katna.readthedocs.io
+[^102]: Pillow: https://pillow.readthedocs.io
 
 ### 2.1.2 Datová augmentace
 
@@ -135,6 +148,8 @@ spustitelný z příkazového řádku, a jako vstupní parametry přijímá:
 
 Program byl vytvořen tak, aby byl co nejvíce generalizován, a díky tomu je dále
 široce využitelný pro tvorbu dalších datasetů z obrázků.
+
+[^102]: Pillow: https://pillow.readthedocs.io
 
 # 2.2 Neuronové sítě v teorii
 
@@ -220,6 +235,7 @@ Dvě tabulky níže ukazují výsledky jednotlivých modelů, jedna na našich d
 |29Konvoluční|5x konvoluce, 5x  maxpool, 3x plně propojená|256|60|0.0002|Ne|**1.000**|0.9007||
 |31Konvoluční|5x konvoluce, 5x  maxpool, 3x plně propojená|512|60|0.0002|Ne|0.9520|0.8919||
 
+*Tabulka 1: Výsledky trénování jednotlivých modelů na námi vytvořeném datasetu* 
 
 | Typ sítě | Vrstev | Batch size | Epoch | Parametr učení $\alpha$ | Padding | Tréninková úspěšnost | Testovací úspěšnost | Poznámka |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | --- |
@@ -235,7 +251,15 @@ Dvě tabulky níže ukazují výsledky jednotlivých modelů, jedna na našich d
 |24Konvoluční|6x konvoluce, 5x maxpool, 3x plně propojená|256|40|0.0001|Ano, při první konvoluci|0.9452|0.8168|Zdvojená třetí konvoluce|
 |30Konvoluční|5x konvoluce, 5x maxpool, 3x plně propojená|512|60|0.0002|Ne|0.9855|0.8405||
 
+*Tabulka 2: Výsledky trénování jednotlivých modelů na datasetu rozšířeném o další obrázky z volně dostupných zdrojů* 
+
 # 4 Závěr
+
+V této práci je nejdříve popsán sběr dat (obrázků) ve třech kategoriích - plast, papír a sklo - a jejich následné zpracování do podoby datasetu s jednotným fromátem, který je následně využitelný pro natrénování neuronové sítě. Dále jsou přiblíženy matematické koncepty na kterých staví neuronové sítě. Poté jsme se teoreticky věnovali konvolučním neuronovým sítím, a tuto teorii pak prakticky využili při trénování několika modelů s různýmí paramtery trénování. Také popisujeme některá úskalí, s nimiž se lze setkat při tréninku neuronových sítí, a se kterými jsme se také v některých případech setkali.
+
+V rámci naší práce jsme vytvořili dataset, který je volně dostupný na adrese https://www.kaggle.com/datasets/ackobecko/odpadky, dále jsme vytvořili program, který dokáže ze složky obrázků udělat dataset specifikovaných parametrů, jako je výška, šířka, a také je dále augmentovat. Tento program byl vytvářen co nejobecněji, a tak je dále široce využitelný pro tvorbu dalších obrázkových datasetů. Dále jsme vytvořili několik modelů konvolučních neuronových sítí, z nichž dva s nejlepší úspěšností - jeden na pouze našem datasetu, druhý na datasetu rozšířeném o data z dostupných zdrojů na internetu - jsou volně dostupné na adrese https://github.com/Adam-Belej/Garbage_classifier, kde jsou zároveň zveřejněny ostatní části softwaru, včetně již zmíněného programu pro tvorbu datasetů. 
+
+Dalšími kroky do budoucna je komunikace s odpadohospodářskými společnostmi o možnostech implementace těchto modelů v praxi na třídících linkách. Model trénovaný a testovaný pouze na našich datech, u nichž má pozadí připomínat právě hýbající se pás na třídící lince - dosahuje testovací úspěšnosti 0.9321, což stále v praxi znamená, že ze 100 exemplářů 7 špatně klasifikuje. Proto by bylo dalším smysluplným krokem při využití našeho modelu v praxi nasbírat ještě výrazně více dat, na kterých bychom model znovu natrénovali, případně ještě dále doupravili a optimalizovali jednotlivé parametry trénování. Druhý model, který je obecnější, a který dosahuje nižší úspěšnosti - 0.8483 - je sice méně přesný, ale stále se jedná o vcelku dobrý výsledek, vezmeme-li v potaz fakt, že dat bylo poměrně málo a byla velmi různorodá, což je pro model mnohem náročnější na naučení. Tento model sice není v praxi použitelný, avšak na něm lze ukázat, že i přes nedostatečné množství dat vzhledem ke složitosti obrázků je schopen dosáhnout vcelku dobré úspěšnosti. 
 
 # Zdroje
 
@@ -251,17 +275,3 @@ Dvě tabulky níže ukazují výsledky jednotlivých modelů, jedna na našich d
 [^6]: GOODFELLOW, Ian, Yoshua BENGIO a Aaron COURVILLE. *The Convolution Operation*. In: Deep Learning [online]. 2016 [cit. 2023-12-17]. Dostupné z: deeplearningbook.org
 [^7]: ZHANG, Aston, Zachary C. LIPTON,  Mu  LI,  a Alexander J. SMOLA. *Dive into Deep Learning* [online]. Cambridge University Press, 2023 [cit. 2023-12-17]. Dostupné z: https://d2l.ai/chapter_convolutional-neural-networks/padding-and-strides.html
 [^x]: KRIZHEVSKY Alex et al. *ImageNet Classification with Deep Convolutional Neural Networks*. 2012.
-
-# Webové odkazy
-(ty pak ideálně dostat pod čáru na každé stránce, na které se na ně odkazuje)
-
-
-[^v]: ChatGPT: https://chat.openai.com/
-[^y]: Leonardo: https://leonardo.ai/
-[^100]: Kaggle: www.kaggle.com
-[^101]: Katna: https://katna.readthedocs.io
-[^102]: Pillow: https://pillow.readthedocs.io
-[^103]: TensorFlow: https://www.tensorflow.org/
-[^104]: PyTorch: https://pytorch.org/
-[^105]: Caffe: http://caffe.berkeleyvision.org/
-[^106]: Deeplearning4j: https://deeplearning4j.konduit.ai/

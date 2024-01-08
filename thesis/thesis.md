@@ -189,7 +189,7 @@ Opačným jevem je podučení, které je dnes již vzhledem ke složitosti použ
 
 ### 2.2.4 Vyhodnocování úspěšnosti modelu
 
-Po natrénování modelu na tréninkových datech je naším cílem zjistit jak dobře model funguje. To můžeme zjistit tak, že jej necháme klasifikovat data, a spočítáme, v kolika procentech případů zařadí model vstupy správně. Mohli bychom zjistit, v kolika procentech správně zařadí tréninková data, ale v takovém případě by výsledek byl jednak zavádějící, jelikož jsou to právě data, na kterých se učil, a tak s vysokou pravděpodobností bude mít při dobře navržené architektuře sítě velmi dobrou úspěšnost na těchto datech. Většinou je však cílem trénování modelu naučit jej rozpoznávat nová - pro model neznámá data. Proto původní dataset rozdělíme, a 90% dat použijeme na učení, a zbylých 10% necháme na pozdější otestování úspěšnosti rozpoznávání nových dat.
+Po natrénování modelu na tréninkových datech je naším cílem zjistit jak dobře model funguje. To můžeme zjistit tak, že jej necháme klasifikovat data, a spočítáme, v kolika procentech případů zařadí model vstupy správně. Mohli bychom zjistit, v kolika procentech správně zařadí tréninková data, ale v takovém případě by výsledek byl zavádějící, jelikož jsou to právě data, na kterých se učil, a tak s vysokou pravděpodobností bude mít při dobře navržené architektuře sítě velmi dobrou úspěšnost na těchto datech. Většinou je však cílem trénování modelu naučit jej rozpoznávat nová - pro model neznámá data. Proto původní dataset rozdělíme, a 90% dat použijeme na učení, a zbylých 10% necháme na pozdější otestování úspěšnosti rozpoznávání nových dat. Z tréninkových 90% dále použijeme část na validaci, která vždy na konci epochy zkontroluje, zda náš model není přeučený a mírně poupraví parametry.
 
 ### 2.2.5 Husté neuronové sítě
 
@@ -227,31 +227,37 @@ Dvě tabulky níže ukazují výsledky jednotlivých modelů, jedna na našich d
 | Typ sítě | Vrstev | Batch size | Epoch | Parametr učení $\alpha$ | Padding | Tréninková úspěšnost | Testovací úspěšnost | Poznámka |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | --- |
 |Hustá|6x plně propojená|128|30|0.001|Ne|0.5516|0.5504||
-|13Konvoluční|5x konvoluce, 5x  maxpool, 3x plně propojená|128|40|0.001|Ne|0.9960|**0.9321**||
-|25Konvoluční|6x konvoluce, 5x  maxpool, 3x plně propojená|256|40|0.0001|Ano, při první konvoluci|0.9404|0.8575|Zdvojená třetí konvoluce|
-|26Konvoluční|6x konvoluce, 5x  maxpool, 3x plně propojená|256|40|0.0001|Ne|0.9327|0.8674|Zdvojená třetí konvoluce|
-|27Konvoluční|6x konvoluce, 5x  maxpool, 3x plně propojená|256|60|0.0001|Ne|0.9643|0.8520|Zdvojená třetí konvoluce|
-|28Konvoluční|5x konvoluce, 5x  maxpool, 3x plně propojená|256|60|0.0001|Ne|0.9637|0.8724||
-|29Konvoluční|5x konvoluce, 5x  maxpool, 3x plně propojená|256|60|0.0002|Ne|**1.000**|0.9007||
-|31Konvoluční|5x konvoluce, 5x  maxpool, 3x plně propojená|512|60|0.0002|Ne|0.9520|0.8919||
+|Konvoluční|5x konvoluce, 5x  maxpool, 3x plně propojená|128|40|0.001|Ne|0.9960|**0.9321**||
+|Konvoluční|6x konvoluce, 5x  maxpool, 3x plně propojená|256|40|0.0001|Ano, při první konvoluci|0.9404|0.8575|Zdvojená třetí konvoluce|
+|Konvoluční|6x konvoluce, 5x  maxpool, 3x plně propojená|256|40|0.0001|Ne|0.9327|0.8674|Zdvojená třetí konvoluce|
+|Konvoluční|6x konvoluce, 5x  maxpool, 3x plně propojená|256|60|0.0001|Ne|0.9643|0.8520|Zdvojená třetí konvoluce|
+|Konvoluční|5x konvoluce, 5x  maxpool, 3x plně propojená|256|60|0.0001|Ne|0.9637|0.8724||
+|Konvoluční|5x konvoluce, 5x  maxpool, 3x plně propojená|256|60|0.0002|Ne|**1.000**|0.9007||
+|Konvoluční|5x konvoluce, 5x  maxpool, 3x plně propojená|512|60|0.0002|Ne|0.9520|0.8919||
 
 *Tabulka 1: Výsledky trénování jednotlivých modelů na námi vytvořeném datasetu* 
 
 | Typ sítě | Vrstev | Batch size | Epoch | Parametr učení $\alpha$ | Padding | Tréninková úspěšnost | Testovací úspěšnost | Poznámka |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | --- |
 |Hustá|6x plně propojená|128|30|0.001|Ne|0.3277|0.3318||
-|15Konvoluční|5x konvoluce, 5x maxpool, 3x plně propojená|128|40|0.001|Ne|0.9914|**0.8483**||
-|17Konvoluční|5x konvoluce, 5x maxpool, 4x plně propojená|128|40|0.001|Ano, při první konvoluci|0.9034|0.8314||
-|18Konvoluční|5x konvoluce, 5x maxpool, 4x plně propojená|128|30|0.001|Ano, při první konvoluci|0.9895|0.8305||
-|19Konvoluční|6x konvoluce, 6x maxpool, 3x plně propojená|128|30|0.001|Ano, při první konvoluci|0.8953|0.8232||
-|20Konvoluční|6x konvoluce, 6x maxpool, 3x plně propojená|128|30|0.0001|Ano, při první konvoluci|0.9822|0.8185||
-|21Konvoluční|6x konvoluce, 6x maxpool, 3x plně propojená|128|60|0.0001|Ano, při první konvoluci|0.9043|0.8293||
-|22Konvoluční|6x konvoluce, 5x maxpool, 3x plně propojená|128|60|0.0001|Ano, při první konvoluci|**0.9916**|0.8093|Zdvojená třetí konvoluce|
-|23Konvoluční|6x konvoluce, 5x maxpool, 3x plně propojená|256|25|0.0001|Ano, při první konvoluci|0.8604|0.8097|Zdvojená třetí konvoluce|
-|24Konvoluční|6x konvoluce, 5x maxpool, 3x plně propojená|256|40|0.0001|Ano, při první konvoluci|0.9452|0.8168|Zdvojená třetí konvoluce|
-|30Konvoluční|5x konvoluce, 5x maxpool, 3x plně propojená|512|60|0.0002|Ne|0.9855|0.8405||
+|Konvoluční|5x konvoluce, 5x maxpool, 3x plně propojená|128|40|0.001|Ne|0.9914|**0.8483**||
+|Konvoluční|5x konvoluce, 5x maxpool, 4x plně propojená|128|40|0.001|Ano, při první konvoluci|0.9034|0.8314||
+|Konvoluční|5x konvoluce, 5x maxpool, 4x plně propojená|128|30|0.001|Ano, při první konvoluci|0.9895|0.8305||
+|Konvoluční|6x konvoluce, 6x maxpool, 3x plně propojená|128|30|0.001|Ano, při první konvoluci|0.8953|0.8232||
+|Konvoluční|6x konvoluce, 6x maxpool, 3x plně propojená|128|30|0.0001|Ano, při první konvoluci|0.9822|0.8185||
+|Konvoluční|6x konvoluce, 6x maxpool, 3x plně propojená|128|60|0.0001|Ano, při první konvoluci|0.9043|0.8293||
+|Konvoluční|6x konvoluce, 5x maxpool, 3x plně propojená|128|60|0.0001|Ano, při první konvoluci|**0.9916**|0.8093|Zdvojená třetí konvoluce|
+|Konvoluční|6x konvoluce, 5x maxpool, 3x plně propojená|256|25|0.0001|Ano, při první konvoluci|0.8604|0.8097|Zdvojená třetí konvoluce|
+|Konvoluční|6x konvoluce, 5x maxpool, 3x plně propojená|256|40|0.0001|Ano, při první konvoluci|0.9452|0.8168|Zdvojená třetí konvoluce|
+|Konvoluční|5x konvoluce, 5x maxpool, 3x plně propojená|512|60|0.0002|Ne|0.9855|0.8405||
 
 *Tabulka 2: Výsledky trénování jednotlivých modelů na datasetu rozšířeném o další obrázky z volně dostupných zdrojů* 
+
+Dva obrázky níže ukazují proces trénování dvou modelů s nejlepšími výsledky na obou verzích datasetu.
+
+![Obrázek 7: Graf průběhu trénování konovluční neuronové sítě na datasetu námi vytvořených obrázků](images/convolutional_only_our_data.png)
+
+![Obrázek 8: Graf průběhu trénování konvoluční neuronové sítě na datasetu rozšířeném o data získaná z internetových zdrojů](images/convolutional_added_data.png)
 
 # 4 Závěr
 

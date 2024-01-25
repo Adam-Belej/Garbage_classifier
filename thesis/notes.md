@@ -16,10 +16,10 @@
 - [x] hustý sítě + proč hustý nefungujou (architektura, graf a výsledky trénování husté sítě)
 ### 6 konvoluční sítě
 - [x] teoretickej úvod, konvoluce, maxpool, padding + stride
-- [ ] alexnet a lenet (z nich vycházím)
-- [ ] architektura mojí konvolučky
-- [ ] oh no, našich datech to overfittuje! - jak jsem se snažil data zobecnit aby neoverfitovaly - naředíme datama z internetu
-- [ ] jaký výsledky měla která síť když jsme a) trénovali na našich datech - výsledky na našich + stažených datech, b) trénovali na datech namíchaných z internetu
-- [ ] výsledky + graf
+- [x] alexnet a lenet (z nich vycházím)
+- [x] architektura mojí konvolučky
+- [x] oh no, našich datech to overfittuje! - jak jsem se snažil data zobecnit aby neoverfitovaly - naředíme datama z internetu
+- [x] jaký výsledky měla která síť když jsme a) trénovali na našich datech - výsledky na našich + stažených datech, b) trénovali na datech namíchaných z internetu
+- [x] výsledky + grafy
 ### 7 závěr
 - [ ] výseldky, jestli jsou good nebo ne, proč to bylo smysluplný, jak se to dá použít/použije dál

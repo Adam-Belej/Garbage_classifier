@@ -1,6 +1,6 @@
 **Obor č. 18: Informační technologie**
 
-**Použití neuronových sítí pro rozpoznávání tříděného odpadu z obrázků**
+**Využití konvolučních neuronových sítí pro rozpoznávání tříděného odpadu z obrázků**
 **Usage of neural networks in garbage classification from images**
 
 **Autoři:** Adam Belej
@@ -199,7 +199,7 @@ Husté neuronové sítě jsou jedním z nejjednodušších druhů sítí, kde ka
 
 # 3 Konvoluční neuronové sítě
 
-## 3.1 Konvoluční neuronové sítě v teorii
+## 3.1 Konvoluční neuronové sítě - teorie
 
 Konvoluční neuronové sítě (CNN - Convolutional Neural Networks)[^p] jsou dalším, již pokročilejším druhem neuronových sítí. Tento druh sítí v minulosti vykazoval při rozpoznávání obrázků výrazně lepších výsledků než husté sítě. [^5] U konvolučních neuronových sítí se využívá dvou dalších operací oproti hustým sítím - konvoluce a poolingu. 
 
@@ -222,7 +222,7 @@ Prvním krokem k vytvoření co možná nejlepšího modelu bylo potřeba nejprv
 Při učení o 40 epochách se nám povedlo dosáhnout testovací úspěšnosti 0.9321 na testovacím vzorku 4359 obrázků. Tento výsledek se zdál být velmi dobrý, ale přesto jsme chtěli zjistit, jak dobře tento model reaguje na data, která již nejsou na stejném pozadí, a proto jsme se rozhodli otestovat model na datech volně dostupných na platformě Kaggle. Na těchto datech již náš model dosahoval výrazně horších výsledků - úspěšnost klasifikace na vzorku 15840 dat byla 0.6355. Přestože tento model by byl v praxi při zachování podmínek (stejné pozadí) a dalším učení na rozsáhlejším datasetu pravděpodobně použitelný, rozhodli jsme se učit model na výrazně větším množství dat, abychom jej zobecnili. Tato data jsme získali spojením námi vytvořeného datasetu a dalšími volně dostupnými datasety z platformy Kaggle. Tímto způsobem jsme téměř ztrojnásobili původní množinu dat, a nový dataset byl výrazně obecnější - obsahoval obrázky na rozličných pozadích, v odlišných světelných podmínkách a také na ještě větším vzorku odpadků, jež se mohou v třech klasifikovaných kategoriích objevit. 
 
 Dále jsme pokračovali v učení, pro každé nové učení jsme mírně poupravili některé parametry trénování - počet vrstev, počet epoch, batch size, parametr učení nebo přidali padding.
-Dvě tabulky níže ukazují výsledky jednotlivých modelů, jedna na našich datech, druhá na rozšířeném datasetu.
+Dvě tabulky níže ukazují výsledky jednotlivých modelů, jedna na našich datech, druhá na rozšířeném datasetu, a obrázky pod nimi grafy průběhu trénování modelu s nejlepší testovací úspěšností pro každý z datasetů..
 
 | Typ sítě | Vrstev | Batch size | Epoch | Parametr učení $\alpha$ | Padding | Tréninková úspěšnost | Testovací úspěšnost | Poznámka |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | --- |

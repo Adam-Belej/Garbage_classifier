@@ -61,7 +61,10 @@ def main(input_dir: str,
 
     print_info("Starting cropping images")
     for image in original_images:
+        if image.endswith('gif'):
+            continue
         image = os.path.join(path_to_images, image)
+        print_info(f"Cropping {image}")
         ku.crop_image_with_aspect_ratio(image, output_dir)
 
     edited_images = fs.get_all_images_from_dir(output_dir)

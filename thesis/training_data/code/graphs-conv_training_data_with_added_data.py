@@ -9,13 +9,13 @@ val_accuracy = [0.7089, 0.7993, 0.8491, 0.8554, 0.8837, 0.893, 0.9049, 0.8974, 0
 
 epochs = range(1, len(loss) + 1)
 
-plt.plot(epochs, loss, 'r', label='Training loss')
-plt.plot(epochs, val_loss, 'b', label='Validation loss')
-plt.title('Training and validation loss')
-plt.xlabel('Epochs')
-plt.ylabel('Loss')
+plt.plot(epochs, accuracy, 'r', label='Tréninková přesnost')
+plt.plot(epochs, val_accuracy, 'b', label='Validační přesnost')
+plt.title('Tréninková a validační přesnost')
+plt.xlabel('Epochy')
+plt.ylabel('Přesnost')
 plt.legend()
-plt.savefig('graphs-conv_training_data_with_added_data.png')
+plt.savefig('graphs-conv_training_data_with_added_data_acc.png')
 plt.show()
 
 

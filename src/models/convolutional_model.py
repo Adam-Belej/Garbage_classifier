@@ -2,7 +2,7 @@ import tensorflow as tf
 from models.Clasifier import Classifier
 
 
-class Alfonzo(Classifier):
+class Convolutional(Classifier):
 
     def __init__(self,
                  num_of_classes: int):

@@ -1,6 +1,6 @@
 import tensorflow as tf
 import utils.network_utils as nu
-from models.Alfonzo import Alfonzo
+from models.convolutional_model import Convolutional
 import os
 
 
@@ -10,7 +10,7 @@ def main(input_dir: str,
          img_width: int = 512,
          img_height: int = 512):
 
-    classifier = Alfonzo(num_of_classes)
+    classifier = Convolutional(num_of_classes)
 
     training_set = nu.load_dataset(data_dir=input_dir,
                                    img_width=img_width,
